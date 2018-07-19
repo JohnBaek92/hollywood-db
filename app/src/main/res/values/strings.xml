@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HollywoodDB</string>
+    <string name="browse_hollywoodDB"><u>Browse HollywoodDB</u></string>
+    <string name="landing_page_search_text">Search for People, Movies and TV Shows</string>
+</resources>
