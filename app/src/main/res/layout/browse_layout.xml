@@ -12,4 +12,23 @@
         android:background="@color/gainsboro"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/top_movies_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Top Rated Movies"
+        android:paddingLeft="20dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/browse_search"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movies_recycler"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/top_movies_text"/>
+
+
 </android.support.constraint.ConstraintLayout>
