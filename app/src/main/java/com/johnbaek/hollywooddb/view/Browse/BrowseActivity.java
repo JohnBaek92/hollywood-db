@@ -1,7 +1,10 @@
-package com.johnbaek.hollywooddb.view;
+package com.johnbaek.hollywooddb.view.Browse;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,14 +27,19 @@ public class BrowseActivity extends Activity {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
+    private RecyclerView browseMoviesRecyclerView;
+
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browse_layout);
 
         MovieAPI MovieAPI = retrofit.create(com.johnbaek.hollywooddb.MovieAPI.class);
 
+        browseMoviesRecyclerView = findViewById(R.id.browse_movies_recycler);
+
+        final BrowseMoviesAdapter browseMoviesAdapter = new BrowseMoviesAdapter();
+        
         final Call<MovieListings> getTopMovies = MovieAPI.getTopMovies();
-        System.out.println("movies" + getTopMovies);
 
         getTopMovies.enqueue(new Callback<MovieListings>() {
             @Override
@@ -40,9 +48,11 @@ public class BrowseActivity extends Activity {
                 ArrayList<Movie> topMovies = unformattedTopMovies.getMovies();
 
                 for(Movie movie: topMovies) {
-                    Log.d("title", movie.getTitle());
+                    browseMoviesAdapter.movies.add(movie);
                 }
-
+                
+                browseMoviesRecyclerView.setAdapter(browseMoviesAdapter);
+                browseMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(BrowseActivity.this, LinearLayoutManager.HORIZONTAL, false));
             }
 
             @Override
@@ -50,5 +60,6 @@ public class BrowseActivity extends Activity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

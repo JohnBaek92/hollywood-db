@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.johnbaek.hollywooddb.R;
+import com.johnbaek.hollywooddb.view.Browse.BrowseActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
 
         final SearchView searchView = findViewById(R.id.landing_page_search_bar);
