@@ -2,10 +2,8 @@ package com.johnbaek.hollywooddb.view.Browse;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.johnbaek.hollywooddb.MovieAPI;
@@ -27,7 +25,9 @@ public class BrowseActivity extends Activity {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    private RecyclerView browseMoviesRecyclerView;
+    private RecyclerView browseTopMoviesRecyclerView;
+    private RecyclerView browseUpcomingMoviesRecyclerView;
+    private RecyclerView browseNowPlayingMoviesRecyclerView;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -35,24 +35,35 @@ public class BrowseActivity extends Activity {
 
         MovieAPI MovieAPI = retrofit.create(com.johnbaek.hollywooddb.MovieAPI.class);
 
-        browseMoviesRecyclerView = findViewById(R.id.browse_movies_recycler);
 
-        final BrowseMoviesAdapter browseMoviesAdapter = new BrowseMoviesAdapter();
-        
+        browseTopMoviesRecyclerView = findViewById(R.id.browse_top_movies_recycler);
+        final BrowseMoviesAdapter browseTopMoviesAdapter = new BrowseMoviesAdapter();
         final Call<MovieListings> getTopMovies = MovieAPI.getTopMovies();
 
-        getTopMovies.enqueue(new Callback<MovieListings>() {
+        browseUpcomingMoviesRecyclerView = findViewById(R.id.browse_upcoming_movies_recycler);
+        final BrowseMoviesAdapter browseUpcomingMoviesAdapter = new BrowseMoviesAdapter();
+        final Call<MovieListings> getUpcomingMovies = MovieAPI.getUpcomingMovies();
+
+        browseNowPlayingMoviesRecyclerView = findViewById(R.id.now_playing_movies_recycler);
+        final BrowseMoviesAdapter browseNowPlayingMoviesAdapter = new BrowseMoviesAdapter();
+        final Call<MovieListings> getNowPlayingMovies = MovieAPI.getNowPlayingMovies();
+
+        addMovies(getTopMovies, browseTopMoviesAdapter, browseTopMoviesRecyclerView);
+        addMovies(getUpcomingMovies, browseUpcomingMoviesAdapter, browseUpcomingMoviesRecyclerView);
+        addMovies(getNowPlayingMovies, browseNowPlayingMoviesAdapter, browseNowPlayingMoviesRecyclerView);
+    }
+
+    private void addMovies(Call<MovieListings> movieListings, final BrowseMoviesAdapter adapter, final RecyclerView recyclerView) {
+        movieListings.enqueue(new Callback<MovieListings>() {
             @Override
             public void onResponse(Call<MovieListings> call, Response<MovieListings> response) {
-                MovieListings unformattedTopMovies = response.body();
-                ArrayList<Movie> topMovies = unformattedTopMovies.getMovies();
+                MovieListings unformattedMovies = response.body();
+                ArrayList<Movie> movies = unformattedMovies.getMovies();
 
-                for(Movie movie: topMovies) {
-                    browseMoviesAdapter.movies.add(movie);
-                }
-                
-                browseMoviesRecyclerView.setAdapter(browseMoviesAdapter);
-                browseMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(BrowseActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                adapter.setMovies(movies);
+
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(BrowseActivity.this, LinearLayoutManager.HORIZONTAL, false));
             }
 
             @Override
@@ -60,6 +71,5 @@ public class BrowseActivity extends Activity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

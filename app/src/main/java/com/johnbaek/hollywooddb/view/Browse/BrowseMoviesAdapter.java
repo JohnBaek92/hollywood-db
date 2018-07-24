@@ -21,7 +21,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
     @NonNull
     @Override
     public BrowseMoviesAdapter.BrowseMovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.browse_movies_layout, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.browse_movie_card_layout, viewGroup, false);
 
         return new BrowseMovieViewHolder(view);
     }
@@ -33,6 +33,10 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
 
         Uri uri = Uri.parse(movieURI);
         browseMovieViewHolder.browseMoviePhoto.setImageURI(uri);
+
+        Float movieVoteAverage = movies.get(i).getVoteAverage();
+        movieVoteAverage = movieVoteAverage / 2;
+        browseMovieViewHolder.browseMovieRating.setRating(Math.round(movieVoteAverage));
     }
 
     @Override
@@ -47,6 +51,10 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
             String movieURL = BASE_URL + POSTER_SIZE + filePath;
 
             return movieURL;
+    }
+
+    public void setMovies(ArrayList<Movie> movies) {
+        this.movies = movies;
     }
 
     class BrowseMovieViewHolder extends RecyclerView.ViewHolder {

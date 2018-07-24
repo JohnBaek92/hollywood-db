@@ -34,4 +34,10 @@ public interface MovieAPI {
 
     @GET("/3/movie/top_rated")
     Call<MovieListings> getTopMovies();
+
+    @GET("/3/movie/upcoming")
+    Call<MovieListings> getUpcomingMovies();
+
+    @GET("/3/movie/now_playing")
+    Call<MovieListings> getNowPlayingMovies();
 }

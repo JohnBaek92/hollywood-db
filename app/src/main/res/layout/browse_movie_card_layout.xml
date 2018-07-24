@@ -35,6 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="title movie"
+            android:maxLines="2"
+            android:ellipsize="end"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/browse_movie_photo" />
 
