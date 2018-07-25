@@ -1,10 +1,13 @@
 package com.johnbaek.hollywooddb.view.Search;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -29,7 +32,18 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
         SearchItem searchItem = searchItemListings.get(i);
 
         String posterURI = searchItem.getPosterPath();
-        String posterURL =
+        String posterURL = searchItem.getPosterURL(posterURI, "/w185");
+        Uri uri = Uri.parse(posterURL);
+        searchListingViewHolder.searchBackground.setImageURI(uri);
+
+        String mediaType = searchItem.getMediaType();
+        searchListingViewHolder.searchMediaType.setText(mediaType);
+
+        if (mediaType.equals("movie")) {
+            searchListingViewHolder.searchName.setText(searchItem.getHollywoodTitle());
+        } else {
+            searchListingViewHolder.searchName.setText(searchItem.getHollywoodName());
+        }
     }
 
     @Override
@@ -37,18 +51,29 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
         return searchItemListings.size();
     }
 
+    public void clear() {
+        final int size = searchItemListings.size();
+        if (size > 0){
+            searchItemListings.clear();
+            notifyItemRangeRemoved(0, size);
+        }
+    }
+
     public void setSearchItemListings(ArrayList<SearchItem> searchItemListings){
         this.searchItemListings = searchItemListings;
     }
 
     public class SearchListingViewHolder extends RecyclerView.ViewHolder {
+        ImageView searchBackground;
         TextView searchMediaType;
         TextView searchName;
         RatingBar searchRating;
 
+
         public SearchListingViewHolder(@NonNull View view) {
             super(view);
-            searchMediaType = view.findViewById(R.id.media_type);
+            searchBackground = view.findViewById(R.id.search_background);
+            searchMediaType = view.findViewById(R.id.search_media_type);
             searchName = view.findViewById(R.id.search_name);
             searchRating = view.findViewById(R.id.search_rating);
         }

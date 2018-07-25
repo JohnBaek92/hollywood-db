@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface MovieAPI {
     @GET("/3/movie/top_rated")
@@ -22,5 +23,5 @@ public interface MovieAPI {
     Call<SearchListings> getNowPlayingMovies();
 
     @GET("/3/search/multi")
-    Call<SearchListings> getSearchAll();
+    Call<SearchListings> getSearchAll(@Query("query") String query);
 }

@@ -32,10 +32,10 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
 
         String moviePosterURI = movie.getPosterPath();
         String moviePosterURL = movie.getPosterURL(moviePosterURI, "/w92");
-        browseMovieViewHolder.browseMovieTitle.setText(movie.getHollywoodTitle());
-
         Uri uri = Uri.parse(moviePosterURL);
         browseMovieViewHolder.browseMoviePhoto.setImageURI(uri);
+
+        browseMovieViewHolder.browseMovieTitle.setText(movie.getHollywoodTitle());
 
         Float movieVoteAverage = movie.getVoteAverage();
         movieVoteAverage = movieVoteAverage / 2;
