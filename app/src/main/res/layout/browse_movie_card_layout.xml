@@ -34,7 +34,7 @@
             android:layout_width="108dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="title movie"
+            android:text="hollywoodTitle movie"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,4 @@
-package com.johnbaek.hollywooddb;
-
-import com.johnbaek.hollywooddb.model.MovieListings;
+package com.johnbaek.hollywooddb.network;
 
 import java.io.IOException;
 
@@ -8,14 +6,14 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.http.GET;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-public interface MovieAPI {
-    String ROOT_URL = "https://api.themoviedb.org";
-    String API_KEY = "71ab1b19293efe581c569c1c79d0f004";
+public class RetrofitClient {
+    private static retrofit2.Retrofit retrofit;
+    private static final String BASE_URL = "https://api.themoviedb.org/";
+    private static final String API_KEY = "71ab1b19293efe581c569c1c79d0f004";
 
-    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    public static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -32,12 +30,14 @@ public interface MovieAPI {
             })
             .build();
 
-    @GET("/3/movie/top_rated")
-    Call<MovieListings> getTopMovies();
-
-    @GET("/3/movie/upcoming")
-    Call<MovieListings> getUpcomingMovies();
-
-    @GET("/3/movie/now_playing")
-    Call<MovieListings> getNowPlayingMovies();
+    public static retrofit2.Retrofit getRetrofitInstance() {
+        if (retrofit == null) {
+            retrofit = new retrofit2.Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+        }
 }

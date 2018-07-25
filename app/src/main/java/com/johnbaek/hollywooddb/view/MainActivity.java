@@ -3,6 +3,7 @@ package com.johnbaek.hollywooddb.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.view.Browse.BrowseActivity;
+import com.johnbaek.hollywooddb.view.Search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -18,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
 
+        enterSearch();
+        enterBrowse();
+    }
+
+    public void enterSearch(){
         final SearchView searchView = findViewById(R.id.landing_page_search_bar);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,12 +33,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        enterBrowse();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String search) {
+                if (!search.isEmpty()) {
+                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                    intent.putExtra("SEARCH", search);
+                    startActivity(intent);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 
     public void enterBrowse(){
-        TextView browse_link = findViewById(R.id.browse_link);
-        browse_link.setOnClickListener(new View.OnClickListener() {
+        TextView browseLink = findViewById(R.id.browse_link);
+        browseLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, BrowseActivity.class));

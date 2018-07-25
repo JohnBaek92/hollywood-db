@@ -22,6 +22,10 @@
         <activity android:name=".view.Browse.BrowseActivity">
 
         </activity>
+
+        <activity android:name=".view.Search.SearchActivity">
+
+        </activity>
     </application>
 
 </manifest>

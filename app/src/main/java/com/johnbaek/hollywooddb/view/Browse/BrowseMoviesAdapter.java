@@ -11,12 +11,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.johnbaek.hollywooddb.R;
-import com.johnbaek.hollywooddb.model.Movie;
+import com.johnbaek.hollywooddb.model.SearchItem;
 
 import java.util.ArrayList;
 
 public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapter.BrowseMovieViewHolder> {
-    ArrayList<Movie> movies = new ArrayList<>();
+    ArrayList<SearchItem> movies = new ArrayList<>();
 
     @NonNull
     @Override
@@ -28,13 +28,16 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull BrowseMovieViewHolder browseMovieViewHolder, int i) {
-        String movieURI = getMovieURL(movies.get(i).getPosterPath());
-        browseMovieViewHolder.browseMovieTitle.setText(movies.get(i).getTitle());
+        SearchItem movie = movies.get(i);
 
-        Uri uri = Uri.parse(movieURI);
+        String moviePosterURI = movie.getPosterPath();
+        String moviePosterURL = movie.getPosterURL(moviePosterURI, "/w92");
+        browseMovieViewHolder.browseMovieTitle.setText(movie.getHollywoodTitle());
+
+        Uri uri = Uri.parse(moviePosterURL);
         browseMovieViewHolder.browseMoviePhoto.setImageURI(uri);
 
-        Float movieVoteAverage = movies.get(i).getVoteAverage();
+        Float movieVoteAverage = movie.getVoteAverage();
         movieVoteAverage = movieVoteAverage / 2;
         browseMovieViewHolder.browseMovieRating.setRating(Math.round(movieVoteAverage));
     }
@@ -44,16 +47,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
         return movies.size();
     }
 
-    public String getMovieURL(String filePath){
-            String BASE_URL = "https://image.tmdb.org/t/p";
-            String POSTER_SIZE = "/w92";
-
-            String movieURL = BASE_URL + POSTER_SIZE + filePath;
-
-            return movieURL;
-    }
-
-    public void setMovies(ArrayList<Movie> movies) {
+    public void setMovies(ArrayList<SearchItem> movies) {
         this.movies = movies;
     }
 
