@@ -9,19 +9,22 @@ public class SearchItem {
     private Float voteAverage;
     @SerializedName("poster_path")
     private String posterPath;
+    @SerializedName("profile_path")
+    private String profilePath;
     private String overview;
     @SerializedName("name")
     private String hollywoodName;
     @SerializedName("title")
     private String hollywoodTitle;
 
-    public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview, String hollywoodTitle, String hollywoodName) {
+    public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview, String hollywoodTitle, String hollywoodName, String profilePath) {
         this.mediaType = mediaType;
         this.voteAverage = voteAverage;
         this.posterPath = posterPath;
         this.overview = overview;
         this.hollywoodTitle = hollywoodTitle;
         this.hollywoodName = hollywoodName;
+        this.profilePath = profilePath;
     }
 
     public String getMediaType() {
@@ -36,6 +39,8 @@ public class SearchItem {
         return posterPath;
     }
 
+    public String getProfilePath() { return profilePath; }
+
     public String getOverview() {
         return overview;
     }
@@ -47,8 +52,8 @@ public class SearchItem {
     public String getPosterURL(String filePath,  String posterSize) {
         String BASE_URL = "https://image.tmdb.org/t/p";
 
-        String movieURL = BASE_URL + posterSize + filePath;
+        String posterURL = BASE_URL + posterSize + filePath;
 
-        return movieURL;
+        return posterURL;
     }
 }

@@ -1,4 +1,4 @@
-package com.johnbaek.hollywooddb.view.Browse;
+package com.johnbaek.hollywooddb.BrowsePage;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

@@ -13,7 +13,7 @@ public class RetrofitClient {
     private static final String BASE_URL = "https://api.themoviedb.org/";
     private static final String API_KEY = "71ab1b19293efe581c569c1c79d0f004";
 
-    public static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new Interceptor() {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {

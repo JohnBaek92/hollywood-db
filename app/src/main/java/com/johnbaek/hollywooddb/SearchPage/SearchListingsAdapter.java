@@ -1,8 +1,8 @@
-package com.johnbaek.hollywooddb.view.Search;
+package com.johnbaek.hollywooddb.SearchPage;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,18 +31,33 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
     public void onBindViewHolder(@NonNull SearchListingsAdapter.SearchListingViewHolder searchListingViewHolder, int i) {
         SearchItem searchItem = searchItemListings.get(i);
 
-        String posterURI = searchItem.getPosterPath();
-        String posterURL = searchItem.getPosterURL(posterURI, "/w185");
-        Uri uri = Uri.parse(posterURL);
-        searchListingViewHolder.searchBackground.setImageURI(uri);
-
         String mediaType = searchItem.getMediaType();
-        searchListingViewHolder.searchMediaType.setText(mediaType);
+        searchListingViewHolder.searchMediaType.setText(mediaType.toUpperCase());
 
-        if (mediaType.equals("movie")) {
-            searchListingViewHolder.searchName.setText(searchItem.getHollywoodTitle());
+        if (mediaType.equals("movie") || mediaType.equals("tv")) {
+            if (mediaType.equals("movie")) {
+                searchListingViewHolder.searchName.setText(searchItem.getHollywoodTitle());
+                searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor("#cc1108"));
+            } else {
+                searchListingViewHolder.searchName.setText(searchItem.getHollywoodName());
+                searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor("#0a912b"));
+            }
+
+            String posterURI = searchItem.getPosterPath();
+            String posterURL = searchItem.getPosterURL(posterURI, "/w185");
+            Uri uri = Uri.parse(posterURL);
+            searchListingViewHolder.searchBackground.setImageURI(uri);
+
+            Float voteAverage = searchItem.getVoteAverage();
+            voteAverage = voteAverage / 2;
+            searchListingViewHolder.searchRating.setRating(Math.round(voteAverage));
         } else {
             searchListingViewHolder.searchName.setText(searchItem.getHollywoodName());
+            searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor("#0832af"));
+            String profileURI = searchItem.getProfilePath();
+            String profileURL = searchItem.getPosterURL(profileURI, "/w185");
+            Uri uri = Uri.parse(profileURL);
+            searchListingViewHolder.searchBackground.setImageURI(uri);
         }
     }
 

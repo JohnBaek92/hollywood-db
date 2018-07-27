@@ -1,17 +1,15 @@
-package com.johnbaek.hollywooddb.view;
+package com.johnbaek.hollywooddb;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.johnbaek.hollywooddb.R;
-import com.johnbaek.hollywooddb.view.Browse.BrowseActivity;
-import com.johnbaek.hollywooddb.view.Search.SearchActivity;
+import com.johnbaek.hollywooddb.BrowsePage.BrowseActivity;
+import com.johnbaek.hollywooddb.SearchPage.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override
