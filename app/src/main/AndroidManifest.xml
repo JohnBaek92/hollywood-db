@@ -26,6 +26,10 @@
         <activity android:name=".SearchPage.SearchActivity">
 
         </activity>
+
+        <activity android:name=".DetailPage.DetailActivity">
+
+        </activity>
     </application>
 
 </manifest>

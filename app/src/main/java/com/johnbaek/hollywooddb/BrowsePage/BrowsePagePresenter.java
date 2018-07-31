@@ -16,6 +16,18 @@ public class BrowsePagePresenter implements BrowsePageContract.Presenter {
         this.model = new BrowsePageModel(this);
     }
 
+    public void fetchTopMovies(){
+        model.retrieveTopMovies();
+    }
+
+    public void fetchUpcomingMovies(){
+        model.retrieveUpcomingMovies();
+    }
+
+    public void fetchNowPlayingMovies(){
+        model.retrieveNowPlayingMovies();
+    }
+
     public void onMoviesRetrievedSuccessful(Response<SearchListings> response, String recyclerView) {
         SearchListings unformattedMovies = response.body();
         ArrayList<SearchItem> movies = unformattedMovies.getSearchItemListings();

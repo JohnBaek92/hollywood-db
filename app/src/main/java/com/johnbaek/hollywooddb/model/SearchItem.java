@@ -2,7 +2,9 @@ package com.johnbaek.hollywooddb.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SearchItem {
+import java.io.Serializable;
+
+public class SearchItem implements Serializable {
     @SerializedName("media_type")
     private String mediaType;
     @SerializedName("vote_average")
@@ -16,6 +18,8 @@ public class SearchItem {
     private String hollywoodName;
     @SerializedName("title")
     private String hollywoodTitle;
+
+    private static String BASE_URL = "https://image.tmdb.org/t/p";
 
     public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview, String hollywoodTitle, String hollywoodName, String profilePath) {
         this.mediaType = mediaType;
@@ -32,7 +36,7 @@ public class SearchItem {
     }
 
     public Float getVoteAverage() {
-        return voteAverage;
+        return voteAverage/2;
     }
 
     public String getPosterPath() {
@@ -50,8 +54,6 @@ public class SearchItem {
     public String getHollywoodName() { return hollywoodName; }
 
     public String getPosterURL(String filePath,  String posterSize) {
-        String BASE_URL = "https://image.tmdb.org/t/p";
-
         String posterURL = BASE_URL + posterSize + filePath;
 
         return posterURL;

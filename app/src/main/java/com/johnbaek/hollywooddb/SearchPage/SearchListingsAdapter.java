@@ -17,7 +17,23 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 import java.util.ArrayList;
 
 public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAdapter.SearchListingViewHolder> {
-    ArrayList<SearchItem> searchItemListings = new ArrayList<>();
+    public interface SearchListingClickListener {
+        void onSearchItemClick(SearchItem searchItem);
+    }
+
+    private SearchListingsAdapter.SearchListingClickListener clickListener;
+    private ArrayList<SearchItem> searchItemListings = new ArrayList<>();
+    private static String MOVIE ="movie";
+    private static String TV ="tv";
+    private static String POSTER_SIZE_185 = "/w185";
+    private static String RED = "#cc1108";
+    private static String GREEN = "#0a912b";
+    private static String BLUE = "#0832af";
+
+    SearchListingsAdapter(SearchListingClickListener clickListener){
+        this.clickListener = clickListener;
+    }
+
 
     @NonNull
     @Override
@@ -30,34 +46,35 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
     @Override
     public void onBindViewHolder(@NonNull SearchListingsAdapter.SearchListingViewHolder searchListingViewHolder, int i) {
         SearchItem searchItem = searchItemListings.get(i);
+        searchListingViewHolder.searchItem = searchItem;
 
         String mediaType = searchItem.getMediaType();
         searchListingViewHolder.searchMediaType.setText(mediaType.toUpperCase());
 
-        if (mediaType.equals("movie") || mediaType.equals("tv")) {
-            if (mediaType.equals("movie")) {
+        if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
+            if (mediaType.equals(MOVIE)) {
                 searchListingViewHolder.searchName.setText(searchItem.getHollywoodTitle());
-                searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor("#cc1108"));
+                searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(RED));
             } else {
                 searchListingViewHolder.searchName.setText(searchItem.getHollywoodName());
-                searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor("#0a912b"));
+                searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(GREEN));
             }
 
             String posterURI = searchItem.getPosterPath();
-            String posterURL = searchItem.getPosterURL(posterURI, "/w185");
+            String posterURL = searchItem.getPosterURL(posterURI, POSTER_SIZE_185);
             Uri uri = Uri.parse(posterURL);
             searchListingViewHolder.searchBackground.setImageURI(uri);
 
             Float voteAverage = searchItem.getVoteAverage();
-            voteAverage = voteAverage / 2;
             searchListingViewHolder.searchRating.setRating(Math.round(voteAverage));
         } else {
             searchListingViewHolder.searchName.setText(searchItem.getHollywoodName());
-            searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor("#0832af"));
+            searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(BLUE));
             String profileURI = searchItem.getProfilePath();
-            String profileURL = searchItem.getPosterURL(profileURI, "/w185");
+            String profileURL = searchItem.getPosterURL(profileURI, POSTER_SIZE_185);
             Uri uri = Uri.parse(profileURL);
             searchListingViewHolder.searchBackground.setImageURI(uri);
+            searchListingViewHolder.searchRating.setVisibility(View.GONE);
         }
     }
 
@@ -78,11 +95,12 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
         this.searchItemListings = searchItemListings;
     }
 
-    public class SearchListingViewHolder extends RecyclerView.ViewHolder {
+    public class SearchListingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView searchBackground;
         TextView searchMediaType;
         TextView searchName;
         RatingBar searchRating;
+        SearchItem searchItem;
 
 
         public SearchListingViewHolder(@NonNull View view) {
@@ -91,6 +109,13 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
             searchMediaType = view.findViewById(R.id.search_media_type);
             searchName = view.findViewById(R.id.search_name);
             searchRating = view.findViewById(R.id.search_rating);
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onSearchItemClick(searchItem);
         }
     }
 }

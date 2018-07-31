@@ -18,6 +18,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
     private SearchPageContract.View view;
     private String searchSubject;
     private SearchPageContract.Model model;
+    private static String NO_RESULTS = "No Results";
 
     public SearchPagePresenter(SearchActivity view) {
         this.view = view;
@@ -37,7 +38,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
 
     public void setSearchSubject(String searchSubject) {
         this.searchSubject = searchSubject;
-        view.displaySearchResultText();
+        view.displaySearchResultText(searchSubject);
     }
 
     public void onSearchResultsRetrievedSuccessful(Response<SearchListings> response) {
@@ -46,7 +47,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
         if( searchItems.size() >= 1) {
             view.displayResults(searchItems);
         } else {
-            view.showToastMessage("No Results");
+            view.showToastMessage(NO_RESULTS);
         }
 
     }

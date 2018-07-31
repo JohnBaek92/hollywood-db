@@ -12,6 +12,8 @@ import com.johnbaek.hollywooddb.BrowsePage.BrowseActivity;
 import com.johnbaek.hollywooddb.SearchPage.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private static String SEARCH = "SEARCH";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String search) {
                 if (!search.isEmpty()) {
                     Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    intent.putExtra("SEARCH", search);
+                    intent.putExtra(SEARCH, search);
                     startActivity(intent);
                 }
                 return false;

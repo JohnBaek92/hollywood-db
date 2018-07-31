@@ -13,6 +13,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MovieAPI {
+    String QUERY = "query";
+
     @GET("/3/movie/top_rated")
     Call<SearchListings> getTopMovies();
 
@@ -23,5 +25,5 @@ public interface MovieAPI {
     Call<SearchListings> getNowPlayingMovies();
 
     @GET("/3/search/multi")
-    Call<SearchListings> getSearchAll(@Query("query") String query);
+    Call<SearchListings> getSearchAll(@Query(QUERY) String query);
 }

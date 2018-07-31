@@ -16,7 +16,17 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 import java.util.ArrayList;
 
 public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapter.BrowseMovieViewHolder> {
-    ArrayList<SearchItem> movies = new ArrayList<>();
+    public interface BrowseListingsClickListener {
+        void onBrowseMovieClick(SearchItem movie);
+    }
+
+    private ArrayList<SearchItem> movies = new ArrayList<>();
+    private BrowseMoviesAdapter.BrowseListingsClickListener clickListener;
+    private static String POSTER_SIZE_92 = "/w92";
+
+    BrowseMoviesAdapter(BrowseListingsClickListener clickListener){
+        this.clickListener = clickListener;
+    }
 
     @NonNull
     @Override
@@ -29,16 +39,16 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
     @Override
     public void onBindViewHolder(@NonNull BrowseMovieViewHolder browseMovieViewHolder, int i) {
         SearchItem movie = movies.get(i);
+        browseMovieViewHolder.movie = movie;
 
         String moviePosterURI = movie.getPosterPath();
-        String moviePosterURL = movie.getPosterURL(moviePosterURI, "/w92");
+        String moviePosterURL = movie.getPosterURL(moviePosterURI, POSTER_SIZE_92);
         Uri uri = Uri.parse(moviePosterURL);
         browseMovieViewHolder.browseMoviePhoto.setImageURI(uri);
 
         browseMovieViewHolder.browseMovieTitle.setText(movie.getHollywoodTitle());
 
         Float movieVoteAverage = movie.getVoteAverage();
-        movieVoteAverage = movieVoteAverage / 2;
         browseMovieViewHolder.browseMovieRating.setRating(Math.round(movieVoteAverage));
     }
 
@@ -51,15 +61,24 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
         this.movies = movies;
     }
 
-    class BrowseMovieViewHolder extends RecyclerView.ViewHolder {
+    class BrowseMovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView browseMovieTitle;
         RatingBar browseMovieRating;
         ImageView browseMoviePhoto;
+        SearchItem movie;
+
         public BrowseMovieViewHolder(View view) {
             super(view);
             browseMovieTitle = view.findViewById(R.id.browse_movie_title);
             browseMovieRating = view.findViewById(R.id.browse_movie_rating);
             browseMoviePhoto = view.findViewById(R.id.browse_movie_photo);
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onBrowseMovieClick(movie);
         }
     }
 }

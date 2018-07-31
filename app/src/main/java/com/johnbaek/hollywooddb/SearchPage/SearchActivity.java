@@ -1,6 +1,7 @@
 package com.johnbaek.hollywooddb.SearchPage;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.johnbaek.hollywooddb.DetailPage.DetailActivity;
 import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.model.SearchItem;
 import com.johnbaek.hollywooddb.model.SearchListings;
@@ -20,10 +22,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends Activity implements SearchPageContract.View {
+public class SearchActivity extends Activity implements SearchPageContract.View, SearchListingsAdapter.SearchListingClickListener {
     private SearchListingsAdapter adapter;
     private RecyclerView recyclerView;
     private SearchPageContract.Presenter presenter;
+    private static String SEARCH = "SEARCH";
+    private static String SEARCHITEM = "searchItem";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,20 +35,20 @@ public class SearchActivity extends Activity implements SearchPageContract.View 
 
         presenter = new SearchPagePresenter(this);
 
-        String searchSubject = getIntent().getStringExtra("SEARCH");
+        String searchSubject = getIntent().getStringExtra(SEARCH);
         presenter.setSearchSubject(searchSubject);
 
         presenter.fetchResults(searchSubject);
     }
 
-    public void displaySearchResultText() {
-        String searchSubjectText = String.format("Search Results for \"%s\"", presenter.getSearchSubject());
+    public void displaySearchResultText(String searchSubject) {
+        String searchSubjectText = String.format("Search Results for \"%s\"", searchSubject);
         TextView searchResultText = findViewById(R.id.search_result_text);
         searchResultText.setText(searchSubjectText);
     }
 
     public void showToastMessage(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     public void clearData() {
@@ -55,9 +59,16 @@ public class SearchActivity extends Activity implements SearchPageContract.View 
 
     public void displayResults(ArrayList<SearchItem> searchItems) {
         recyclerView = findViewById(R.id.search_recycler_view);
-        adapter = new SearchListingsAdapter();
+        adapter = new SearchListingsAdapter(this);
         adapter.setSearchItemListings(searchItems);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.VERTICAL, false));
+    }
+
+    @Override
+    public void onSearchItemClick(SearchItem searchItem) {
+        Intent intent = new Intent(SearchActivity.this, DetailActivity.class);
+        intent.putExtra(SEARCHITEM, searchItem);
+        startActivity(intent);
     }
 }

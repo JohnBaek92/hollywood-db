@@ -14,7 +14,7 @@ public interface SearchPageContract {
 
     interface View {
         void displayResults(ArrayList<SearchItem> searchItems);
-        void displaySearchResultText();
+        void displaySearchResultText(String searchSubject);
         void showToastMessage(String message);
         void clearData();
     }
@@ -22,7 +22,6 @@ public interface SearchPageContract {
     interface Presenter {
         void fetchResults(final String searchSubject);
         void setSearchSubject(String searchSubject);
-        String getSearchSubject();
         void onSearchResultsRetrievedFailed(Throwable throwable);
         void onSearchResultsRetrievedSuccessful(Response<SearchListings> response);
     }

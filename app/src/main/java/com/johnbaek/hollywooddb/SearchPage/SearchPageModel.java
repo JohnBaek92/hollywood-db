@@ -16,7 +16,7 @@ public class SearchPageModel implements SearchPageContract.Model {
 
     public  SearchPageModel(SearchPagePresenter presenter) {
         this.presenter = presenter;
-        this.movieAPI = RetrofitClient.getRetrofitInstance().create(com.johnbaek.hollywooddb.network.MovieAPI.class);
+        this.movieAPI = RetrofitClient.getRetrofitMovieClient();
     }
 
     public void retrieveResults(String searchSubject) {

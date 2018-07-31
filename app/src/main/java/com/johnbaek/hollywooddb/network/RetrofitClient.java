@@ -12,6 +12,7 @@ public class RetrofitClient {
     private static retrofit2.Retrofit retrofit;
     private static final String BASE_URL = "https://api.themoviedb.org/";
     private static final String API_KEY = "71ab1b19293efe581c569c1c79d0f004";
+    private static String API_KEY_STRING = "api_key";
 
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new Interceptor() {
@@ -20,7 +21,7 @@ public class RetrofitClient {
                     Request original = chain.request();
                     HttpUrl httpUrl = original.url();
 
-                    HttpUrl newHttpUrl = httpUrl.newBuilder().addQueryParameter("api_key", API_KEY).build();
+                    HttpUrl newHttpUrl = httpUrl.newBuilder().addQueryParameter(API_KEY_STRING, API_KEY).build();
 
                     Request.Builder requestBuilder = original.newBuilder().url(newHttpUrl);
 
@@ -40,4 +41,8 @@ public class RetrofitClient {
         }
         return retrofit;
         }
+
+    public static com.johnbaek.hollywooddb.network.MovieAPI getRetrofitMovieClient() {
+        return getRetrofitInstance().create(com.johnbaek.hollywooddb.network.MovieAPI.class);
+    }
 }

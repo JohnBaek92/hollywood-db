@@ -5,6 +5,7 @@ import com.johnbaek.hollywooddb.model.SearchListings;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
 import retrofit2.Response;
 
 public interface BrowsePageContract {
@@ -12,15 +13,19 @@ public interface BrowsePageContract {
         void retrieveTopMovies();
         void retrieveUpcomingMovies();
         void retrieveNowPlayingMovies();
+        void enqueueMovies(Call<SearchListings> movies, final String recyclerViewID);
     }
 
     interface View {
         void showToastMessage(String message);
-        void displayMovies(ArrayList<SearchItem> movies, String recyclerView);
+        void displayMovies(ArrayList<SearchItem> movies, String recyclerViewID);
     }
 
     interface Presenter {
-        void onMoviesRetrievedSuccessful(Response<SearchListings> response, String recyclerView);
+        void onMoviesRetrievedSuccessful(Response<SearchListings> response, String recyclerViewID);
         void onMoviesRetrievedFailed(Throwable throwable);
+        void fetchTopMovies();
+        void fetchUpcomingMovies();
+        void fetchNowPlayingMovies();
     }
 }
