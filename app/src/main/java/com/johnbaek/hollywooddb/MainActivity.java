@@ -20,36 +20,36 @@ public class MainActivity extends AppCompatActivity {
         Fresco.initialize(this);
         setContentView(R.layout.activity_main);
 
-        enterSearch();
+//        enterSearch();
         enterBrowse();
     }
 
-    public void enterSearch(){
-        final SearchView searchView = findViewById(R.id.landing_page_search_bar);
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchView.setIconified(false);
-            }
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String search) {
-                if (!search.isEmpty()) {
-                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    intent.putExtra(SEARCH, search);
-                    startActivity(intent);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-    }
+//    public void enterSearch(){
+//        final SearchView searchView = findViewById(R.id.landing_page_search_bar);
+//        searchView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                searchView.setIconified(false);
+//            }
+//        });
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String search) {
+//                if (!search.isEmpty()) {
+//                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+//                    intent.putExtra(SEARCH, search);
+//                    startActivity(intent);
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                return false;
+//            }
+//        });
+//    }
 
     public void enterBrowse(){
         TextView browseLink = findViewById(R.id.browse_link);

@@ -13,7 +13,7 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 
 public class DetailActivity extends Activity implements DetailPageContract.View {
     private DetailPageContract.Presenter presenter;
-    private static String PERSON = "PERSON";
+    private static String PERSON = "person";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -26,7 +26,7 @@ public class SearchActivity extends Activity implements SearchPageContract.View,
     private SearchListingsAdapter adapter;
     private RecyclerView recyclerView;
     private SearchPageContract.Presenter presenter;
-    private static String SEARCH = "SEARCH";
+    private static String SEARCH = "search";
     private static String SEARCHITEM = "searchItem";
 
     protected void onCreate(Bundle savedInstanceState) {
