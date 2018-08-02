@@ -50,8 +50,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
         SearchListings unformattedResults = response.body();
         ArrayList<SearchItem> searchItems = unformattedResults.getSearchItemListings();
         if( searchItems.size() >= 1) {
-            List<Favorites> favorites = new Thread(() -> DatabaseInitializer.getAllFavorites()).start();
-//            List<Favorites> favorites = DatabaseInitializer.getAllFavorites();
+            List<Favorites> favorites = DatabaseInitializer.asyncGetAllFavorites();
             HashSet<String> hashFavoriteNames = new HashSet<>();
             for(Favorites favorite : favorites){
                 String identifier = favorite.getIdentifier();

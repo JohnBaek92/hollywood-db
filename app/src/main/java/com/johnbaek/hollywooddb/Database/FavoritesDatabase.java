@@ -14,6 +14,7 @@ import android.content.Context;
         public static FavoritesDatabase getFavoritesDatabase(Context context) {
             if (FAVORITES_DATABASE == null) {
                 FAVORITES_DATABASE = Room.databaseBuilder(context.getApplicationContext(), FavoritesDatabase.class, "favoritesDatabase")
+                        .allowMainThreadQueries()
                         .build();
             }
             return FAVORITES_DATABASE;

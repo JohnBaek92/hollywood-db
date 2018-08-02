@@ -11,7 +11,7 @@ import java.util.List;
 public interface FavoritesDaoAccess {
 
     @Insert
-    Favorites insertFavorite (Favorites favorite);
+    long insertFavorite (Favorites favorite);
     @Query("SELECT * FROM favorites WHERE identifier = :identifier")
     Favorites fetchFavoriteByIdentifier (String identifier);
     @Query("SELECT * FROM favorites")

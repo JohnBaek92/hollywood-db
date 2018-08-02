@@ -24,11 +24,9 @@ public class Util {
         Favorites temp = DatabaseInitializer.getFavoriteByIdentifier(favorite.getIdentifier());
 
         if (temp == null){
-//            DatabaseInitializer.asyncAddFavorite(favorite);
-            new Thread(() -> DatabaseInitializer.asyncAddFavorite(favorite)).start();
+            new DatabaseInitializer.DbAsync().addFavorite(favorite);
         } else {
-            DatabaseInitializer.asyncDeleteFavorite(temp);
-            new Thread(() -> DatabaseInitializer.asyncDeleteFavorite(temp)).start();
+            new DatabaseInitializer.DbAsync().deleteFavorite(temp);
         }
 
         favoriteToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
