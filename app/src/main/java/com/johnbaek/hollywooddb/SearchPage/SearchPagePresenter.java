@@ -3,12 +3,17 @@ package com.johnbaek.hollywooddb.SearchPage;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.johnbaek.hollywooddb.Database.DatabaseInitializer;
+import com.johnbaek.hollywooddb.Database.Favorites;
 import com.johnbaek.hollywooddb.model.SearchItem;
 import com.johnbaek.hollywooddb.model.SearchListings;
 import com.johnbaek.hollywooddb.network.MovieAPI;
 import com.johnbaek.hollywooddb.network.RetrofitClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,11 +50,21 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
         SearchListings unformattedResults = response.body();
         ArrayList<SearchItem> searchItems = unformattedResults.getSearchItemListings();
         if( searchItems.size() >= 1) {
+            List<Favorites> favorites = new Thread(() -> DatabaseInitializer.getAllFavorites()).start();
+//            List<Favorites> favorites = DatabaseInitializer.getAllFavorites();
+            HashSet<String> hashFavoriteNames = new HashSet<>();
+            for(Favorites favorite : favorites){
+                String identifier = favorite.getIdentifier();
+                hashFavoriteNames.add(identifier);
+            }
+            for(SearchItem searchItem : searchItems){
+                String identifier = searchItem.getHollywoodName() != null ? searchItem.getHollywoodName() : searchItem.getHollywoodTitle();
+                searchItem.setFavorite(hashFavoriteNames.contains(identifier));
+            }
             view.displayResults(searchItems);
         } else {
             view.showToastMessage(NO_RESULTS);
         }
-
     }
 
     public void onSearchResultsRetrievedFailed(Throwable throwable) {view.showToastMessage(throwable.getMessage());}

@@ -4,20 +4,16 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity
+@Entity(tableName = "favorites")
 public class Favorites {
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private Integer favoriteId;
     private String identifier;
     private String mediaType;
-    private String posterPath;
+    private String imageURI;
     private Float voteAverage;
     private String overview;
-
-    public Favorites(){
-
-    }
 
     public String getMediaType() {
         return mediaType;
@@ -27,12 +23,12 @@ public class Favorites {
         this.mediaType = mediaType;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public String getImageURI() {
+        return imageURI;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setImageURI(String posterPath) {
+        this.imageURI = posterPath;
     }
 
     public Float getVoteAverage() {
@@ -51,12 +47,11 @@ public class Favorites {
         this.overview = overview;
     }
 
-    @NonNull
     public Integer getFavoriteId(){
         return favoriteId ;
     }
 
-    public void setFavoriteId(@NonNull Integer favoriteId){
+    public void setFavoriteId(Integer favoriteId){
         this.favoriteId = favoriteId;
     }
 
@@ -67,5 +62,4 @@ public class Favorites {
     public String getIdentifier(){
         return identifier;
     }
-
 }

@@ -1,5 +1,10 @@
 package com.johnbaek.hollywooddb.model;
 
+import android.support.annotation.Nullable;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -18,10 +23,12 @@ public class SearchItem implements Serializable {
     private String hollywoodName;
     @SerializedName("title")
     private String hollywoodTitle;
+    private boolean isFavorite;
 
     private static String BASE_URL = "https://image.tmdb.org/t/p";
 
-    public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview, String hollywoodTitle, String hollywoodName, String profilePath) {
+    public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview,
+                      String hollywoodTitle, String hollywoodName, String profilePath) {
         this.mediaType = mediaType;
         this.voteAverage = voteAverage;
         this.posterPath = posterPath;
@@ -57,5 +64,13 @@ public class SearchItem implements Serializable {
         String posterURL = BASE_URL + posterSize + filePath;
 
         return posterURL;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }
