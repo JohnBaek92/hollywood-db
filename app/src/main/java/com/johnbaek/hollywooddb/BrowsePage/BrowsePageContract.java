@@ -17,7 +17,6 @@ public interface BrowsePageContract {
     }
 
     interface View {
-        void showToastMessage(String message);
         void displayMovies(ArrayList<SearchItem> movies, String recyclerViewID);
     }
 

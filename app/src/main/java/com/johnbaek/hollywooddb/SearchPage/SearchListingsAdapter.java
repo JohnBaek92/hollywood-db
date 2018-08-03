@@ -56,61 +56,52 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
     public void onBindViewHolder(@NonNull final SearchListingsAdapter.SearchListingViewHolder searchListingViewHolder, int i) {
         SearchItem searchItem = searchItemListings.get(i);
         searchListingViewHolder.searchItem = searchItem;
-        final Favorites favorite = new Favorites();
-
 
         String mediaType = searchItem.getMediaType();
-        favorite.setMediaType(mediaType);
         searchListingViewHolder.searchMediaType.setText(mediaType.toUpperCase());
+
+        String identifier;
+        Uri uri;
+        Integer voteAverage = null;
 
         if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
             if (mediaType.equals(MOVIE)) {
-                String identifier = searchItem.getHollywoodTitle();
+                identifier = searchItem.getHollywoodTitle();
                 searchListingViewHolder.searchName.setText(identifier);
                 searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(RED));
-                favorite.setIdentifier(identifier);
             } else {
-                String identifier = searchItem.getHollywoodName();
+                identifier = searchItem.getHollywoodName();
                 searchListingViewHolder.searchName.setText(identifier);
                 searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(GREEN));
-                favorite.setIdentifier(identifier);
             }
 
             String posterURI = searchItem.getPosterPath();
-            favorite.setImageURI(posterURI);
             String posterURL = searchItem.getPosterURL(posterURI, POSTER_SIZE_185);
-            Uri uri = Uri.parse(posterURL);
+            uri = Uri.parse(posterURL);
             searchListingViewHolder.searchBackground.setImageURI(uri);
 
-            Float voteAverage = searchItem.getVoteAverage();
-            favorite.setVoteAverage(voteAverage);
+            voteAverage = Math.round(searchItem.getVoteAverage());
             searchListingViewHolder.searchRating.setRating(Math.round(voteAverage));
         } else {
-            String identifier = searchItem.getHollywoodName();
+            identifier = searchItem.getHollywoodName();
             searchListingViewHolder.searchName.setText(identifier);
-            favorite.setIdentifier(identifier);
             searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(BLUE));
             String profileURI = searchItem.getProfilePath();
-            favorite.setImageURI(profileURI);
             String profileURL = searchItem.getPosterURL(profileURI, POSTER_SIZE_185);
-            Uri uri = Uri.parse(profileURL);
+            uri = Uri.parse(profileURL);
             searchListingViewHolder.searchBackground.setImageURI(uri);
             searchListingViewHolder.searchRating.setVisibility(View.GONE);
         }
 
-        String overview = favorite.getOverview();
-        favorite.setOverview(overview);
+        String overview = searchItem.getOverview();
 
         final ToggleButton favoriteToggle = searchListingViewHolder.favoriteToggle;
 
         favoriteToggle.setChecked(searchItem.isFavorite());
 
-        favoriteToggle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                util.onFavoriteClick(favoriteToggle, favorite);
-            }
-        });
+        final Favorites favorite = new Favorites(identifier, mediaType, uri.toString(), voteAverage, overview);
+
+        favoriteToggle.setOnClickListener(view -> util.onFavoriteClick(favoriteToggle, favorite));
     }
 
     @Override

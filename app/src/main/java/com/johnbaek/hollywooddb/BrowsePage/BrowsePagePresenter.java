@@ -1,5 +1,6 @@
 package com.johnbaek.hollywooddb.BrowsePage;
 
+import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
 import com.johnbaek.hollywooddb.model.SearchListings;
 
@@ -14,6 +15,9 @@ public class BrowsePagePresenter implements BrowsePageContract.Presenter {
     public BrowsePagePresenter(BrowseActivity view) {
         this.view = view;
         this.model = new BrowsePageModel(this);
+        fetchTopMovies();
+        fetchUpcomingMovies();
+        fetchNowPlayingMovies();
     }
 
     public void fetchTopMovies(){
@@ -36,6 +40,6 @@ public class BrowsePagePresenter implements BrowsePageContract.Presenter {
     }
 
     public void onMoviesRetrievedFailed(Throwable throwable) {
-        view.showToastMessage(throwable.getMessage());
+        Util.showToastMessage(throwable.getMessage());
     }
 }

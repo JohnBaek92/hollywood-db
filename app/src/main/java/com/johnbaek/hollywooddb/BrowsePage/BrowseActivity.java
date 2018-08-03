@@ -25,13 +25,6 @@ public class BrowseActivity extends Activity implements BrowsePageContract.View,
         setContentView(R.layout.browse_layout);
 
         presenter = new BrowsePagePresenter(this);
-        presenter.fetchTopMovies();
-        presenter.fetchUpcomingMovies();
-        presenter.fetchNowPlayingMovies();
-    }
-
-    public void showToastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     public void displayMovies(ArrayList<SearchItem> movies, String recyclerViewID) {

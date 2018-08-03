@@ -23,5 +23,6 @@ public interface DetailPageContract {
         String getID();
         Integer getVoteAverage();
         String getOverview();
+        Boolean getFavoriteStatus();
     }
 }

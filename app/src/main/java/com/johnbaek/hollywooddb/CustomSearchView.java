@@ -35,12 +35,7 @@ public class CustomSearchView extends SearchView {
 
     public void enterSearch(){
         final SearchView searchView = this;
-        searchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchView.setIconified(false);
-            }
-        });
+        searchView.setOnClickListener(v -> searchView.setIconified(false));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -55,7 +50,6 @@ public class CustomSearchView extends SearchView {
 
             @Override
             public boolean onQueryTextChange(String search) {
-
                 return false;
             }
         });

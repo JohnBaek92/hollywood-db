@@ -1,8 +1,14 @@
 package com.johnbaek.hollywooddb.DetailPage;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 
+import com.johnbaek.hollywooddb.Database.DatabaseInitializer;
+import com.johnbaek.hollywooddb.Database.Favorites;
 import com.johnbaek.hollywooddb.model.SearchItem;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class DetailPagePresenter implements DetailPageContract.Presenter {
     private DetailActivity view;
@@ -14,8 +20,8 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
         this.model = new DetailPageModel(this);
     }
 
-    public void setDetailSubject(SearchItem detailSubject){
-        this.detailSubject = detailSubject;
+    public void setDetailSubject(SearchItem searchItem){
+        this.detailSubject = searchItem;
         view.displayDetailView();
     }
 
@@ -38,5 +44,18 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
 
     public String getOverview(){
         return detailSubject.getOverview();
+    }
+
+    public Boolean getFavoriteStatus(){
+        new DatabaseInitializer.AsyncGetFavorites(favorites -> {
+            HashSet<String> hashFavoriteNames = new HashSet<>();
+            for (Favorites favorite : favorites) {
+                String identifier = favorite.getIdentifier();
+                hashFavoriteNames.add(identifier);
+            }
+            String detailId = detailSubject.getHollywoodName() != null ? detailSubject.getHollywoodName() : detailSubject.getHollywoodTitle();
+            detailSubject.setFavorite(hashFavoriteNames.contains(detailId));
+        }).execute();
+        return detailSubject.isFavorite();
     }
 }

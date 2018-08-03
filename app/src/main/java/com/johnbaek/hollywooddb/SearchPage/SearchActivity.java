@@ -46,14 +46,16 @@ public class SearchActivity extends Activity implements SearchPageContract.View,
         presenter.fetchResults(searchSubject);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.fetchResults(presenter.getSearchSubject());
+    }
+
     public void displaySearchResultText(String searchSubject) {
         String searchSubjectText = String.format("Search Results for \"%s\"", searchSubject);
         TextView searchResultText = findViewById(R.id.search_result_text);
         searchResultText.setText(searchSubjectText);
-    }
-
-    public void showToastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     public void clearData() {
