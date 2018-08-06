@@ -57,7 +57,7 @@ public class DetailActivity extends Activity implements DetailPageContract.View 
             detailRatingView.setVisibility(View.GONE);
         }
 
-        detailToggleFavorite.setChecked(presenter.getFavoriteStatus());
+        presenter.setFavoriteStatus(detailToggleFavorite);
 
         final Favorites favorite = new Favorites(ID, mediaType, uri.toString(), voteAverage, overview);
 

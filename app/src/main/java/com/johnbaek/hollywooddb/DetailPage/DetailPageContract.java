@@ -1,6 +1,7 @@
 package com.johnbaek.hollywooddb.DetailPage;
 
 import android.net.Uri;
+import android.widget.ToggleButton;
 
 import com.johnbaek.hollywooddb.model.SearchItem;
 
@@ -23,6 +24,6 @@ public interface DetailPageContract {
         String getID();
         Integer getVoteAverage();
         String getOverview();
-        Boolean getFavoriteStatus();
+        void setFavoriteStatus(ToggleButton detailToggleFavorite);
     }
 }

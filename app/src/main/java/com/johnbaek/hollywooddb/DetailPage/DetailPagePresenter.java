@@ -2,6 +2,7 @@ package com.johnbaek.hollywooddb.DetailPage;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.widget.ToggleButton;
 
 import com.johnbaek.hollywooddb.Database.DatabaseInitializer;
 import com.johnbaek.hollywooddb.Database.Favorites;
@@ -46,7 +47,7 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
         return detailSubject.getOverview();
     }
 
-    public Boolean getFavoriteStatus(){
+    public void setFavoriteStatus(ToggleButton detailToggleFavorite){
         new DatabaseInitializer.AsyncGetFavorites(favorites -> {
             HashSet<String> hashFavoriteNames = new HashSet<>();
             for (Favorites favorite : favorites) {
@@ -54,8 +55,15 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
                 hashFavoriteNames.add(identifier);
             }
             String detailId = detailSubject.getHollywoodName() != null ? detailSubject.getHollywoodName() : detailSubject.getHollywoodTitle();
+
             detailSubject.setFavorite(hashFavoriteNames.contains(detailId));
+
+            if (hashFavoriteNames.contains(detailId)) {
+                detailToggleFavorite.setChecked(true);
+            } else {
+                detailToggleFavorite.setChecked(false);
+            }
+
         }).execute();
-        return detailSubject.isFavorite();
     }
 }
