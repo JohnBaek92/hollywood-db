@@ -20,17 +20,20 @@ import com.johnbaek.hollywooddb.network.MovieAPI;
 
 import java.util.List;
 
-public class FavoritesActivity extends AppCompatActivity implements FavoritesAdapter.FavoritesClickListener, CategorizedSearchFragment.OnFragmentInteractionListener{
+public class FavoritesActivity extends AppCompatActivity implements FavoritesAdapter.FavoritesClickListener, CategorizedSearchFragment.OnFragmentInteractionListener, FavoritesPageContract.View{
     private RecyclerView recyclerView;
     private FavoritesAdapter adapter;
     private final static String SEARCHITEM = "searchItem";
+    private FavoritesPageContract.Presenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favorites_page_layout);
 
-        fetchFavorites();
+        presenter = new FavoritesPagePresenter(this);
+
+        presenter.fetchFavorites();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = CategorizedSearchFragment.newInstance();
@@ -40,13 +43,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
     @Override
     protected void onResume() {
         super.onResume();
-        fetchFavorites();
-    }
-
-    public void fetchFavorites(){
-        new DatabaseInitializer.AsyncGetFavorites(favorites -> {
-            displayResults(favorites);
-        }).execute();
+        presenter.fetchFavorites();
     }
 
     public void clearData() {

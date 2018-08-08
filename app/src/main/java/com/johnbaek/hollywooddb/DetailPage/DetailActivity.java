@@ -59,7 +59,7 @@ public class DetailActivity extends Activity implements DetailPageContract.View 
 
         presenter.setFavoriteStatus(detailToggleFavorite);
 
-        final Favorites favorite = new Favorites(ID, mediaType, uri.toString(), voteAverage, overview, presenter.getDatabaseId());
+        final Favorites favorite = new Favorites(ID, mediaType, presenter.getPosterURL(), voteAverage, overview, presenter.getDatabaseId());
 
         detailToggleFavorite.setOnClickListener(view -> Util.onFavoriteClick(detailToggleFavorite, favorite));
     }

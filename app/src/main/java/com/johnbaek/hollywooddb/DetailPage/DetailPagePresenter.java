@@ -44,6 +44,14 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
         return model.createPosterURI(detailSubject, mediaType);
     }
 
+    public String getPosterURL(){
+        if(detailSubject.getPosterPath() != null){
+            return detailSubject.getPosterPath();
+        } else {
+            return detailSubject.getProfilePath();
+        }
+    }
+
     public String getID(){
         return model.setID(detailSubject);
     }

@@ -24,6 +24,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
     private ArrayList<SearchItem> movies = new ArrayList<>();
     private BrowseMoviesAdapter.BrowseListingsClickListener clickListener;
     private static String POSTER_SIZE_92 = "/w92";
+    private static String MOVIE = "movie";
 
     BrowseMoviesAdapter(BrowseListingsClickListener clickListener){
         this.clickListener = clickListener;
@@ -41,6 +42,8 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
     public void onBindViewHolder(@NonNull BrowseMovieViewHolder browseMovieViewHolder, int i) {
         SearchItem movie = movies.get(i);
         browseMovieViewHolder.movie = movie;
+
+        movie.setMediaType(MOVIE);
 
         String moviePosterURI = movie.getPosterPath();
         String moviePosterURL = Util.getPosterURL(moviePosterURI, POSTER_SIZE_92);

@@ -23,6 +23,7 @@ public interface DetailPageContract {
         void onPersonRetrievedSuccessful();
         void setDetailSubject(SearchItem detailSubject);
         String getMediaType();
+        String getPosterURL();
         Uri getPosterURI();
         String getID();
         Float getVoteAverage();
