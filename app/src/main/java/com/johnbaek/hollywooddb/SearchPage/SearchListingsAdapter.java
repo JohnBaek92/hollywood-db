@@ -30,6 +30,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
     private ArrayList<SearchItem> searchItemListings = new ArrayList<>();
     private static String MOVIE ="movie";
     private static String TV ="tv";
+    private static String PERSON = "person";
     private static String POSTER_SIZE_185 = "/w185";
     private static String RED = "#cc1108";
     private static String GREEN = "#0a912b";
@@ -54,7 +55,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
         SearchItem searchItem = searchItemListings.get(i);
         searchListingViewHolder.searchItem = searchItem;
 
-        String mediaType = searchItem.getMediaType() != null ? searchItem.getMediaType() : "person";
+        String mediaType = searchItem.getMediaType() != null ? searchItem.getMediaType() : PERSON;
         searchListingViewHolder.searchMediaType.setText(mediaType.toUpperCase());
 
         String identifier;
@@ -83,7 +84,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
             searchListingViewHolder.searchBackground.setImageURI(uri);
 
             voteAverage = Math.round(searchItem.getVoteAverage());
-            searchListingViewHolder.searchRating.setRating(Math.round(voteAverage));
+            searchListingViewHolder.searchRating.setRating(Math.round(voteAverage/2));
 
             favorite = new Favorites(identifier, mediaType, posterURI, searchItem.getVoteAverage(), overview, searchItem.getDatabaseId());
         } else {

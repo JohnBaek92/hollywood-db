@@ -24,6 +24,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         void onFavoriteItemClick(SearchItem favorite);
     }
 
+    private static String W185 = "/w185";
+    private static String MOVIE = "movie";
+    private static String TV ="tv";
+
     private FavoritesAdapter.FavoritesClickListener clickListener;
     private List<Favorites> favorites = new ArrayList<>();
 
@@ -57,7 +61,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         favoritesViewHolder.favoriteMediaType.setText(mediaType.toUpperCase());
 
         String imageURI = favorite.getImageURI();
-        String imageURL = Util.getPosterURL(imageURI, "/w185");
+        String imageURL = Util.getPosterURL(imageURI, W185);
         Uri uri = Uri.parse(imageURL);
 
         favoritesViewHolder.favoriteBackground.setImageURI(uri);
@@ -65,8 +69,8 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         final Favorites favoriteDBCheck = new Favorites(identifier, mediaType, imageURI, favorite.getVoteAverage(), overview, favorite.getDatabaseId());
 
 
-        if(mediaType.equals("movie") || mediaType.equals("tv")) {
-            favoritesViewHolder.favoriteRating.setRating(Math.round(favorite.getVoteAverage()));
+        if(mediaType.equals(MOVIE) || mediaType.equals(TV)) {
+            favoritesViewHolder.favoriteRating.setRating(Math.round(favorite.getVoteAverage()/2));
             favoriteItem = new SearchItem(mediaType, favorite.getVoteAverage()+0.1f, favorite.getImageURI(), overview, identifier, null, null, favorite.getDatabaseId());
         } else {
             favoritesViewHolder.favoriteRating.setVisibility(View.GONE);

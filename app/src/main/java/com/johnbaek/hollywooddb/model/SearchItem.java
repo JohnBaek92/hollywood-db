@@ -51,7 +51,7 @@ public class SearchItem implements Serializable {
     }
 
     public Float getVoteAverage() {
-        return voteAverage/2;
+        return voteAverage;
     }
 
     public String getPosterPath() {

@@ -53,7 +53,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
         browseMovieViewHolder.browseMovieTitle.setText(movie.getHollywoodTitle());
 
         Float movieVoteAverage = movie.getVoteAverage();
-        browseMovieViewHolder.browseMovieRating.setRating(Math.round(movieVoteAverage));
+        browseMovieViewHolder.browseMovieRating.setRating(Math.round(movieVoteAverage/2));
     }
 
     @Override

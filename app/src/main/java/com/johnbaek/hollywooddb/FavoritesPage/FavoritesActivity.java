@@ -24,6 +24,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
     private RecyclerView recyclerView;
     private FavoritesAdapter adapter;
     private final static String SEARCHITEM = "searchItem";
+    private static String NOFAVORITES = "No Favorites";
     private FavoritesPageContract.Presenter presenter;
 
     @Override
@@ -62,7 +63,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(FavoritesActivity.this, LinearLayoutManager.VERTICAL, false));
         } else {
-            Util.showToastMessage("No Results");
+            Util.showToastMessage(NOFAVORITES);
         }
     }
 

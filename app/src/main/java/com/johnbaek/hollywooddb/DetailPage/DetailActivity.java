@@ -17,13 +17,14 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 public class DetailActivity extends Activity implements DetailPageContract.View {
     private DetailPageContract.Presenter presenter;
     private static String PERSON = "person";
+    private static String SEARCHITEM = "searchItem";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_layout);
 
 
-        SearchItem searchItem = (SearchItem) getIntent().getSerializableExtra("searchItem");
+        SearchItem searchItem = (SearchItem) getIntent().getSerializableExtra(SEARCHITEM);
 
         presenter = new DetailPagePresenter(this);
         presenter.setDetailSubject(searchItem);
@@ -52,7 +53,7 @@ public class DetailActivity extends Activity implements DetailPageContract.View 
         Float voteAverage = null;
         if (!mediaType.equals(PERSON)) {
             voteAverage = presenter.getVoteAverage();
-            detailRatingView.setRating(voteAverage);
+            detailRatingView.setRating(Math.round(voteAverage/2));
         } else {
             detailRatingView.setVisibility(View.GONE);
         }
