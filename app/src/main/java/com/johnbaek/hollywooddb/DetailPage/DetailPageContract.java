@@ -10,7 +10,8 @@ public interface DetailPageContract {
         String setMediaType(SearchItem searchItem);
         Uri createPosterURI(SearchItem searchItem, String mediaType);
         String setID(SearchItem searchItem);
-        Integer setVoteAverage(SearchItem searchItem);
+        Float setVoteAverage(SearchItem searchItem);
+        void retrievePersonOverview(SearchItem searchItem);
     }
 
     interface View {
@@ -18,12 +19,15 @@ public interface DetailPageContract {
     }
 
     interface Presenter {
+        void onSearchResultsRetrievedFailed(Throwable throwable);
+        void onPersonRetrievedSuccessful();
         void setDetailSubject(SearchItem detailSubject);
         String getMediaType();
         Uri getPosterURI();
         String getID();
-        Integer getVoteAverage();
+        Float getVoteAverage();
         String getOverview();
+        int getDatabaseId();
         void setFavoriteStatus(ToggleButton detailToggleFavorite);
     }
 }

@@ -16,20 +16,40 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
 
     private SearchPageContract.View view;
     private String searchSubject;
+    private String mediaType;
     private SearchPageContract.Model model;
     private static String NO_RESULTS = "No Results";
     private List<Favorites> favorites;
+    private final static String PERSON = "person";
+    private final static String MOVIE = "movie";
+    private final static String TV = "tv";
+    private final static String ALL = "all";
 
     public SearchPagePresenter(SearchActivity view) {
         this.view = view;
         this.searchSubject = "";
+        this.mediaType = "";
         this.model = new SearchPageModel(this);
     }
 
-    @Override
-    public void fetchResults(String searchSubject) {
+    public void fetchResults(){
         view.clearData();
-        model.retrieveResults(searchSubject);
+        switch (mediaType) {
+            case ALL:
+                model.retrieveAllResults(searchSubject, mediaType);
+                break;
+            case PERSON:
+                model.retrievePeopleResults(searchSubject, mediaType);
+                break;
+            case MOVIE:
+                model.retrieveMovieResults(searchSubject, mediaType);
+                break;
+            case TV:
+                model.retrieveTvResults(searchSubject, mediaType);
+                break;
+            default:
+                break;
+        }
     }
 
     public String getSearchSubject() {
@@ -41,9 +61,15 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
         view.displaySearchResultText(searchSubject);
     }
 
-    public void onSearchResultsRetrievedSuccessful(Response<SearchListings> response) {
-        SearchListings unformattedResults = response.body();
-        ArrayList<SearchItem> searchItems = unformattedResults.getSearchItemListings();
+    public void setMediaType(String mediaType){
+        this.mediaType = mediaType;
+    }
+
+    public String getMediaType() {
+        return this.mediaType;
+    }
+
+    public void onSearchResultsRetrievedSuccessful(ArrayList<SearchItem> searchItems) {
         if (searchItems.size() >= 1) {
             new DatabaseInitializer.AsyncGetFavorites(favorites -> {
                 HashSet<String> hashFavoriteNames = new HashSet<>();

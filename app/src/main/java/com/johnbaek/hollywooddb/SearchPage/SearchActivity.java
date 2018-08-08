@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.Animation;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
 import com.johnbaek.hollywooddb.DetailPage.DetailActivity;
 import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.model.SearchItem;
@@ -27,12 +31,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends Activity implements SearchPageContract.View, SearchListingsAdapter.SearchListingClickListener {
+public class SearchActivity extends AppCompatActivity implements SearchPageContract.View, SearchListingsAdapter.SearchListingClickListener, CategorizedSearchFragment.OnFragmentInteractionListener {
     private SearchListingsAdapter adapter;
     private RecyclerView recyclerView;
     private SearchPageContract.Presenter presenter;
-    private static String SEARCH = "search";
-    private static String SEARCHITEM = "searchItem";
+    private final static String SEARCH = "search";
+    private final static String SEARCHITEM = "searchItem";
+    private final static String MEDIATYPE = "mediaType";
+    private final static String PERSON = "person";
+    private final static String MOVIE = "movie";
+    private final static String TV = "tv";
+    private final static String ALL = "all";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +50,23 @@ public class SearchActivity extends Activity implements SearchPageContract.View,
         presenter = new SearchPagePresenter(this);
 
         String searchSubject = getIntent().getStringExtra(SEARCH);
-        presenter.setSearchSubject(searchSubject);
+        String mediaType = getIntent().getStringExtra(MEDIATYPE);
 
-        presenter.fetchResults(searchSubject);
+        presenter.setSearchSubject(searchSubject);
+        presenter.setMediaType(mediaType);
+
+        presenter.fetchResults();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = CategorizedSearchFragment.newInstance();
+        fragmentManager.beginTransaction().add(R.id.search_fragment_container, fragment).commit();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.fetchResults(presenter.getSearchSubject());
+        presenter.fetchResults();
     }
 
     public void displaySearchResultText(String searchSubject) {

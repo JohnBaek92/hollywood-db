@@ -31,6 +31,9 @@
         <activity android:name=".DetailPage.DetailActivity">
 
         </activity>
+        <activity android:name=".FavoritesPage.FavoritesActivity">
+
+        </activity>
     </application>
 
 </manifest>

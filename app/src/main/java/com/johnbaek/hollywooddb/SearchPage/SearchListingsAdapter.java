@@ -7,17 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.ScaleAnimation;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.johnbaek.hollywooddb.Database.Favorites;
-import com.johnbaek.hollywooddb.Database.FavoritesDatabase;
 import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
@@ -25,6 +20,8 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 import java.util.ArrayList;
 
 public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAdapter.SearchListingViewHolder> {
+    private SearchPageContract.Presenter presenter;
+
     public interface SearchListingClickListener {
         void onSearchItemClick(SearchItem searchItem);
     }
@@ -57,12 +54,17 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
         SearchItem searchItem = searchItemListings.get(i);
         searchListingViewHolder.searchItem = searchItem;
 
-        String mediaType = searchItem.getMediaType();
+        String mediaType = searchItem.getMediaType() != null ? searchItem.getMediaType() : "person";
         searchListingViewHolder.searchMediaType.setText(mediaType.toUpperCase());
 
         String identifier;
         Uri uri;
         Integer voteAverage = null;
+        String profileURI = null;
+        String posterURI = null;
+        Favorites favorite;
+
+        String overview = searchItem.getOverview();
 
         if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
             if (mediaType.equals(MOVIE)) {
@@ -75,31 +77,31 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
                 searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(GREEN));
             }
 
-            String posterURI = searchItem.getPosterPath();
-            String posterURL = searchItem.getPosterURL(posterURI, POSTER_SIZE_185);
+            posterURI = searchItem.getPosterPath();
+            String posterURL = Util.getPosterURL(posterURI, POSTER_SIZE_185);
             uri = Uri.parse(posterURL);
             searchListingViewHolder.searchBackground.setImageURI(uri);
 
             voteAverage = Math.round(searchItem.getVoteAverage());
             searchListingViewHolder.searchRating.setRating(Math.round(voteAverage));
+
+            favorite = new Favorites(identifier, mediaType, posterURI, searchItem.getVoteAverage(), overview, searchItem.getDatabaseId());
         } else {
             identifier = searchItem.getHollywoodName();
             searchListingViewHolder.searchName.setText(identifier);
             searchListingViewHolder.searchName.setBackgroundColor(Color.parseColor(BLUE));
-            String profileURI = searchItem.getProfilePath();
-            String profileURL = searchItem.getPosterURL(profileURI, POSTER_SIZE_185);
+            profileURI = searchItem.getProfilePath();
+            String profileURL = Util.getPosterURL(profileURI, POSTER_SIZE_185);
             uri = Uri.parse(profileURL);
             searchListingViewHolder.searchBackground.setImageURI(uri);
             searchListingViewHolder.searchRating.setVisibility(View.GONE);
-        }
 
-        String overview = searchItem.getOverview();
+            favorite = new Favorites(identifier, mediaType, profileURI, null, overview, searchItem.getDatabaseId());
+        }
 
         final ToggleButton favoriteToggle = searchListingViewHolder.favoriteToggle;
 
         favoriteToggle.setChecked(searchItem.isFavorite());
-
-        final Favorites favorite = new Favorites(identifier, mediaType, uri.toString(), voteAverage, overview);
 
         favoriteToggle.setOnClickListener(view -> util.onFavoriteClick(favoriteToggle, favorite));
     }

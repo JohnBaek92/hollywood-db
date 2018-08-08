@@ -1,20 +1,21 @@
 package com.johnbaek.hollywooddb.DetailPage;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.widget.ToggleButton;
 
 import com.johnbaek.hollywooddb.Database.DatabaseInitializer;
 import com.johnbaek.hollywooddb.Database.Favorites;
+import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
 
+import java.nio.file.Path;
 import java.util.HashSet;
-import java.util.List;
 
 public class DetailPagePresenter implements DetailPageContract.Presenter {
     private DetailActivity view;
     private SearchItem detailSubject;
     private DetailPageContract.Model model;
+    private static String PERSON ="person";
 
     public DetailPagePresenter(DetailActivity view) {
         this.view = view;
@@ -23,7 +24,15 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
 
     public void setDetailSubject(SearchItem searchItem){
         this.detailSubject = searchItem;
-        view.displayDetailView();
+        if(detailSubject.getMediaType().equals(PERSON)){
+            model.retrievePersonOverview(searchItem);
+        } else {
+            view.displayDetailView();
+        }
+    }
+
+    public void onSearchResultsRetrievedFailed(Throwable throwable) {
+        Util.showToastMessage(throwable.getMessage());
     }
 
     public String getMediaType(){
@@ -39,13 +48,19 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
         return model.setID(detailSubject);
     }
 
-    public Integer getVoteAverage(){
+    public int getDatabaseId(){ return detailSubject.getDatabaseId(); }
+
+    public Float getVoteAverage(){
         return model.setVoteAverage(detailSubject);
     }
 
     public String getOverview(){
         return detailSubject.getOverview();
     }
+
+    public void onPersonRetrievedSuccessful(){
+        view.displayDetailView();
+    };
 
     public void setFavoriteStatus(ToggleButton detailToggleFavorite){
         new DatabaseInitializer.AsyncGetFavorites(favorites -> {

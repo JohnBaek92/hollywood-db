@@ -1,10 +1,5 @@
 package com.johnbaek.hollywooddb.model;
 
-import android.support.annotation.Nullable;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -23,12 +18,13 @@ public class SearchItem implements Serializable {
     private String hollywoodName;
     @SerializedName("title")
     private String hollywoodTitle;
+    @SerializedName("id")
+    private int databaseId;
     private boolean isFavorite;
-
-    private static String BASE_URL = "https://image.tmdb.org/t/p";
+    private String biography;
 
     public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview,
-                      String hollywoodTitle, String hollywoodName, String profilePath) {
+                      String hollywoodTitle, String hollywoodName, String profilePath, int databaseId) {
         this.mediaType = mediaType;
         this.voteAverage = voteAverage;
         this.posterPath = posterPath;
@@ -36,10 +32,22 @@ public class SearchItem implements Serializable {
         this.hollywoodTitle = hollywoodTitle;
         this.hollywoodName = hollywoodName;
         this.profilePath = profilePath;
+        this.databaseId = databaseId;
+        this.biography = "";
     }
+
+    public String getBiography(){ return this.biography; }
+
+    public void setBiography(String biography){ this.biography = biography; }
+
+    public int getDatabaseId(){ return databaseId; }
 
     public String getMediaType() {
         return mediaType;
+    }
+
+    public void setMediaType(String mediaType){
+        this.mediaType = mediaType;
     }
 
     public Float getVoteAverage() {
@@ -56,15 +64,11 @@ public class SearchItem implements Serializable {
         return overview;
     }
 
+    public void setOverview(String overview){ this.overview = overview; }
+
     public String getHollywoodTitle() { return hollywoodTitle; }
 
     public String getHollywoodName() { return hollywoodName; }
-
-    public String getPosterURL(String filePath,  String posterSize) {
-        String posterURL = BASE_URL + posterSize + filePath;
-
-        return posterURL;
-    }
 
     public boolean isFavorite() {
         return isFavorite;

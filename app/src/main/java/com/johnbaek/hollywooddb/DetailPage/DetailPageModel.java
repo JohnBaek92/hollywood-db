@@ -2,7 +2,14 @@ package com.johnbaek.hollywooddb.DetailPage;
 
 import android.net.Uri;
 
+import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
+import com.johnbaek.hollywooddb.network.MovieAPI;
+import com.johnbaek.hollywooddb.network.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailPageModel implements DetailPageContract.Model {
     DetailPageContract.Presenter presenter;
@@ -10,8 +17,10 @@ public class DetailPageModel implements DetailPageContract.Model {
     private static String TV = "tv";
     private static String PERSON = "person";
     private static String POSTER_SIZE_185 = "/w185";
+    private MovieAPI movieAPI;
 
     public DetailPageModel(DetailPagePresenter presenter){
+        this.movieAPI = RetrofitClient.getRetrofitMovieClient();
         this.presenter = presenter;
     }
 
@@ -25,28 +34,51 @@ public class DetailPageModel implements DetailPageContract.Model {
         return ID;
     }
 
+    public void setPersonOverview(String overview, SearchItem searchItem){
+        searchItem.setOverview(overview);
+    }
+
+    public void retrievePersonOverview(SearchItem searchItem){
+        Call<SearchItem> searchListing = movieAPI.getPersonQuery(searchItem.getDatabaseId());
+        searchListing.enqueue(new Callback<SearchItem>(){
+
+            @Override
+            public void onResponse(Call<SearchItem> call, Response<SearchItem> response) {
+                if(response.isSuccessful()){
+                    setPersonOverview(response.body().getBiography(), searchItem);
+                }
+                presenter.onPersonRetrievedSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<SearchItem> call, Throwable t) {
+                presenter.onSearchResultsRetrievedFailed(t);
+            }
+        });
+    }
+
     public Uri createPosterURI(SearchItem searchItem, String mediaType){
         Uri uri;
         if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
             String posterURI = searchItem.getPosterPath();
-            String posterURL = searchItem.getPosterURL(posterURI, POSTER_SIZE_185);
+            String posterURL = Util.getPosterURL(posterURI, POSTER_SIZE_185);
             uri = Uri.parse(posterURL);
         } else {
             String profileURI = searchItem.getProfilePath();
-            String profileURL = searchItem.getPosterURL(profileURI, POSTER_SIZE_185);
+            String profileURL = Util.getPosterURL(profileURI, POSTER_SIZE_185);
             uri = Uri.parse(profileURL);
         }
 
         return uri;
     }
 
-    public Integer setVoteAverage(SearchItem searchItem){
+    public Float setVoteAverage(SearchItem searchItem){
         if (searchItem.getMediaType() == null || !searchItem.getMediaType().equals(PERSON)) {
             Float voteAverage = searchItem.getVoteAverage();
-            return Math.round(voteAverage);
+            return voteAverage;
         }
        else {
-            return 0;
+            return 0.1f;
         }
     }
 }

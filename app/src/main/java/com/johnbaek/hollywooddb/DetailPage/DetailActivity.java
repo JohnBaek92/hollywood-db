@@ -49,7 +49,7 @@ public class DetailActivity extends Activity implements DetailPageContract.View 
         Uri uri = presenter.getPosterURI();
         detailImageView.setImageURI(uri);
 
-        Integer voteAverage = null;
+        Float voteAverage = null;
         if (!mediaType.equals(PERSON)) {
             voteAverage = presenter.getVoteAverage();
             detailRatingView.setRating(voteAverage);
@@ -59,7 +59,7 @@ public class DetailActivity extends Activity implements DetailPageContract.View 
 
         presenter.setFavoriteStatus(detailToggleFavorite);
 
-        final Favorites favorite = new Favorites(ID, mediaType, uri.toString(), voteAverage, overview);
+        final Favorites favorite = new Favorites(ID, mediaType, uri.toString(), voteAverage, overview, presenter.getDatabaseId());
 
         detailToggleFavorite.setOnClickListener(view -> Util.onFavoriteClick(detailToggleFavorite, favorite));
     }

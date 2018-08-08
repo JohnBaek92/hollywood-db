@@ -10,20 +10,21 @@ public class Favorites {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     private Integer favoriteId;
+    private String identifier;
+    private String mediaType;
+    private String imageURI;
+    private Float voteAverage;
+    private String overview;
+    private int databaseId;
 
-    public Favorites(String identifier, String mediaType, String imageURI, Integer voteAverage, String overview) {
+    public Favorites(String identifier, String mediaType, String imageURI, Float voteAverage, String overview, int databaseId) {
         this.identifier = identifier;
         this.mediaType = mediaType;
         this.imageURI = imageURI;
         this.voteAverage = voteAverage;
         this.overview = overview;
+        this.databaseId = databaseId;
     }
-
-    private String identifier;
-    private String mediaType;
-    private String imageURI;
-    private Integer voteAverage;
-    private String overview;
 
     public String getMediaType() {
         return mediaType;
@@ -41,11 +42,11 @@ public class Favorites {
         this.imageURI = posterPath;
     }
 
-    public Integer getVoteAverage() {
+    public Float getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(Integer voteAverage) {
+    public void setVoteAverage(Float voteAverage) {
         this.voteAverage = voteAverage;
     }
 
@@ -72,4 +73,6 @@ public class Favorites {
     public String getIdentifier(){
         return identifier;
     }
+
+    public int getDatabaseId() { return databaseId; }
 }

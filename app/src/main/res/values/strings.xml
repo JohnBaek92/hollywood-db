@@ -3,4 +3,8 @@
     <string name="browse_hollywoodDB"><u>Browse HollywoodDB</u></string>
     <string name="landing_page_search_text">Search for People, Movies and TV Shows</string>
     <string name="browse_favorites"><u>View Favorites</u></string>
+    <string name="search_people">in People</string>
+    <string name="search_movies">in Movies</string>
+    <string name="search_tv">in TV</string>
+    <string name="my_favorites"><b>My Favorites</b></string>
 </resources>

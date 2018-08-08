@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.johnbaek.hollywooddb.R;
+import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
         browseMovieViewHolder.movie = movie;
 
         String moviePosterURI = movie.getPosterPath();
-        String moviePosterURL = movie.getPosterURL(moviePosterURI, POSTER_SIZE_92);
+        String moviePosterURL = Util.getPosterURL(moviePosterURI, POSTER_SIZE_92);
         Uri uri = Uri.parse(moviePosterURL);
         browseMovieViewHolder.browseMoviePhoto.setImageURI(uri);
 
