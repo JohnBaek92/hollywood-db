@@ -8,7 +8,8 @@ import com.johnbaek.hollywooddb.HollywoodDB;
 import java.util.List;
 
 public class DatabaseInitializer {
-    final static FavoritesDatabase db = FavoritesDatabase.getFavoritesDatabase(HollywoodDB.getAppContext());
+//    final static FavoritesDatabase db = FavoritesDatabase.getFavoritesDatabase(HollywoodDB.getAppContext());
+    final static FavoritesDatabase db = HollywoodDB.getFavoritesDatabase();
 
     public static Favorites addFavorite(Favorites favorite){
         db.favoritesDaoAccess().insertFavorite(favorite);

@@ -29,7 +29,7 @@ public class RetrofitClient {
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
             })
-            .addInterceptor(httpLoggingInterceptor)
+//            .addInterceptor(httpLoggingInterceptor)
             .build();
 
     public static retrofit2.Retrofit getRetrofitInstance() {

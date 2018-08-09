@@ -84,11 +84,11 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
                 view.displayResults(searchItems);
             }).execute();
         } else {
-            Util.showToastMessage(NO_RESULTS);
+            view.showToastMessage(NO_RESULTS);
         }
     }
 
     public void onSearchResultsRetrievedFailed(Throwable throwable) {
-        Util.showToastMessage(throwable.getMessage());
+        view.showToastMessage(throwable.getMessage());
     }
 }

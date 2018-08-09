@@ -17,6 +17,7 @@ public interface DetailPageContract {
 
     interface View {
         void displayDetailView();
+        void showToastMessage(String throwable);
     }
 
     interface Presenter {

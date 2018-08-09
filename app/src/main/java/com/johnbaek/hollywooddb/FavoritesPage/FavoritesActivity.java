@@ -53,6 +53,10 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
         }
     }
 
+    public void showToastMessage(String error){
+        Util.showToastMessage(error, this);
+    }
+
 
     public void displayResults(List<Favorites> favorites){
         clearData();
@@ -63,7 +67,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(FavoritesActivity.this, LinearLayoutManager.VERTICAL, false));
         } else {
-            Util.showToastMessage(NOFAVORITES);
+            showToastMessage(NOFAVORITES);
         }
     }
 

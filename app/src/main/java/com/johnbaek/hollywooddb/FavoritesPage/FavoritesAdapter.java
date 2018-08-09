@@ -1,5 +1,6 @@
 package com.johnbaek.hollywooddb.FavoritesPage;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,9 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     private static String W185 = "/w185";
     private static String MOVIE = "movie";
     private static String TV ="tv";
+    private static String RED = "#cc1108";
+    private static String GREEN = "#0a912b";
+    private static String BLUE = "#0832af";
 
     private FavoritesAdapter.FavoritesClickListener clickListener;
     private List<Favorites> favorites = new ArrayList<>();
@@ -72,9 +76,15 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         if(mediaType.equals(MOVIE) || mediaType.equals(TV)) {
             favoritesViewHolder.favoriteRating.setRating(Math.round(favorite.getVoteAverage()/2));
             favoriteItem = new SearchItem(mediaType, favorite.getVoteAverage()+0.1f, favorite.getImageURI(), overview, identifier, null, null, favorite.getDatabaseId());
+            if(mediaType.equals(MOVIE)){
+                favoritesViewHolder.favoriteName.setBackgroundColor(Color.parseColor(RED));
+            } else {
+                favoritesViewHolder.favoriteName.setBackgroundColor(Color.parseColor(GREEN));
+            }
         } else {
             favoritesViewHolder.favoriteRating.setVisibility(View.GONE);
             favoriteItem = new SearchItem(mediaType, null, null, overview, null, identifier, favorite.getImageURI(), favorite.getDatabaseId());
+            favoritesViewHolder.favoriteName.setBackgroundColor(Color.parseColor(BLUE));
         }
 
         favoritesViewHolder.favoriteItem = favoriteItem;

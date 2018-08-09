@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
 import com.johnbaek.hollywooddb.DetailPage.DetailActivity;
+import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
 import com.johnbaek.hollywooddb.R;
 
@@ -48,6 +49,10 @@ public class BrowseActivity extends AppCompatActivity implements BrowsePageContr
     public void setAdapterToRecycler(BrowseMoviesAdapter adapter, RecyclerView recyclerView) {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(BrowseActivity.this, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    public void showToastMessage(String throwable){
+        Util.showToastMessage(throwable, this);
     }
 
     @Override

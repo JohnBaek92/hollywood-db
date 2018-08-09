@@ -40,6 +40,6 @@ public class BrowsePagePresenter implements BrowsePageContract.Presenter {
     }
 
     public void onMoviesRetrievedFailed(Throwable throwable) {
-        Util.showToastMessage(throwable.getMessage());
+        view.showToastMessage(throwable.getMessage());
     }
 }

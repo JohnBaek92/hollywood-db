@@ -32,7 +32,7 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
     }
 
     public void onSearchResultsRetrievedFailed(Throwable throwable) {
-        Util.showToastMessage(throwable.getMessage());
+        view.showToastMessage(throwable.getMessage());
     }
 
     public String getMediaType(){

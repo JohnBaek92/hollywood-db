@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
 import com.johnbaek.hollywooddb.DetailPage.DetailActivity;
 import com.johnbaek.hollywooddb.R;
+import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
 import java.util.ArrayList;
 
@@ -66,6 +67,10 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
         if (adapter != null) {
             adapter.clear();
         }
+    }
+
+    public void showToastMessage(String throwable){
+        Util.showToastMessage(throwable, this);
     }
 
     public void displayResults(ArrayList<SearchItem> searchItems) {

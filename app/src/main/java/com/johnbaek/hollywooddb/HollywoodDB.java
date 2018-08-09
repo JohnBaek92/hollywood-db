@@ -7,17 +7,18 @@ import android.support.v4.app.FragmentManager;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
+import com.johnbaek.hollywooddb.Database.FavoritesDatabase;
 
 public class HollywoodDB extends Application {
-    private static Context context;
+    private static FavoritesDatabase favoritesDatabase;
 
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
-        HollywoodDB.context = getApplicationContext();
+        favoritesDatabase = FavoritesDatabase.getFavoritesDatabase(this);
     }
 
-    public static Context getAppContext() {
-        return HollywoodDB.context;
+    public static FavoritesDatabase getFavoritesDatabase() {
+        return favoritesDatabase;
     }
 }

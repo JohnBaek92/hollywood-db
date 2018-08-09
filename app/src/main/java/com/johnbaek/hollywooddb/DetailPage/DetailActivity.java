@@ -36,6 +36,10 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
         presenter.setDetailSubject(searchItem);
     }
 
+    public void showToastMessage(String throwable){
+        Util.showToastMessage(throwable, this);
+    }
+
     public void displayDetailView(){
         TextView detailMediaTypeView = findViewById(R.id.detail_media_type);
         TextView detailIDView = findViewById(R.id.detail_id);

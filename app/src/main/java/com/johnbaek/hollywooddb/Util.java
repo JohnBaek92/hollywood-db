@@ -1,5 +1,6 @@
 package com.johnbaek.hollywooddb;
 
+import android.content.Context;
 import android.graphics.Movie;
 import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
@@ -21,15 +22,14 @@ public class Util {
         BounceInterpolator bounceInterpolator = new BounceInterpolator();
         scaleAnimation.setInterpolator(bounceInterpolator);
         new DatabaseInitializer.AsyncToggleFavorite(favoriteReturn -> {}).execute(favorite);
-
         favoriteToggle.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             //animation
             compoundButton.startAnimation(scaleAnimation);
         });
     }
 
-    static public void showToastMessage(String message) {
-        Toast.makeText(HollywoodDB.getAppContext(), message, Toast.LENGTH_LONG).show();
+    static public void showToastMessage(String message, Context context) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     static public String getPosterURL(String filePath,  String posterSize) {

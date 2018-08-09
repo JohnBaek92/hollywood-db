@@ -19,6 +19,7 @@ public interface SearchPageContract {
         void displayResults(ArrayList<SearchItem> searchItems);
         void displaySearchResultText(String searchSubject);
         void clearData();
+        void showToastMessage(String throwable);
     }
 
     interface Presenter {

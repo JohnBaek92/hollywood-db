@@ -102,9 +102,10 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
 
         final ToggleButton favoriteToggle = searchListingViewHolder.favoriteToggle;
 
+
         favoriteToggle.setChecked(searchItem.isFavorite());
 
-        favoriteToggle.setOnClickListener(view -> util.onFavoriteClick(favoriteToggle, favorite));
+        favoriteToggle.setOnClickListener(view -> Util.onFavoriteClick(favoriteToggle, favorite));
     }
 
     @Override
