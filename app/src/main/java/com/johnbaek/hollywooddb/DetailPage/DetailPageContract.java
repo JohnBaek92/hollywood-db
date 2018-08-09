@@ -12,6 +12,7 @@ public interface DetailPageContract {
         String setID(SearchItem searchItem);
         Float setVoteAverage(SearchItem searchItem);
         void retrievePersonOverview(SearchItem searchItem);
+        void retrieveTrailers(SearchItem searchItem);
     }
 
     interface View {
@@ -30,5 +31,6 @@ public interface DetailPageContract {
         String getOverview();
         int getDatabaseId();
         void setFavoriteStatus(ToggleButton detailToggleFavorite);
+        String getTrailer();
     }
 }

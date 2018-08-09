@@ -22,6 +22,7 @@ public class SearchItem implements Serializable {
     private int databaseId;
     private boolean isFavorite;
     private String biography;
+    private String trailerKey;
 
     public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview,
                       String hollywoodTitle, String hollywoodName, String profilePath, int databaseId) {
@@ -34,6 +35,15 @@ public class SearchItem implements Serializable {
         this.profilePath = profilePath;
         this.databaseId = databaseId;
         this.biography = "";
+        this.trailerKey = null;
+    }
+
+    public String getTrailerKey() {
+        return trailerKey;
+    }
+
+    public void setTrailerKey(String trailerKey) {
+        this.trailerKey = trailerKey;
     }
 
     public String getBiography(){ return this.biography; }

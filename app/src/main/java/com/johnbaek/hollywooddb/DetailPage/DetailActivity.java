@@ -9,15 +9,21 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.johnbaek.hollywooddb.Database.Favorites;
 import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
+import com.johnbaek.hollywooddb.network.YouTubeClient;
 
-public class DetailActivity extends Activity implements DetailPageContract.View {
+public class DetailActivity extends YouTubeBaseActivity implements DetailPageContract.View {
     private DetailPageContract.Presenter presenter;
     private static String PERSON = "person";
     private static String SEARCHITEM = "searchItem";
+    private YouTubePlayer.OnInitializedListener onInitializedListener;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,25 @@ public class DetailActivity extends Activity implements DetailPageContract.View 
         RatingBar detailRatingView = findViewById(R.id.detail_rating);
         TextView detailOverviewView = findViewById(R.id.detail_overview);
         ToggleButton detailToggleFavorite = findViewById(R.id.detail_favorite_toggle);
+        YouTubePlayerView youTubePlayerView = findViewById(R.id.youTubePlayer);
+
+        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                    youTubePlayer.cueVideo(presenter.getTrailer());
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+
+        if (presenter.getTrailer() != null){
+            youTubePlayerView.initialize(YouTubeClient.getApiKey(), onInitializedListener);
+        } else {
+            youTubePlayerView.setVisibility(View.GONE);
+        }
 
         String mediaType = presenter.getMediaType();
         detailMediaTypeView.setText(mediaType.toUpperCase());
@@ -51,10 +76,12 @@ public class DetailActivity extends Activity implements DetailPageContract.View 
         detailImageView.setImageURI(uri);
 
         Float voteAverage = null;
+
         if (!mediaType.equals(PERSON)) {
             voteAverage = presenter.getVoteAverage();
             detailRatingView.setRating(Math.round(voteAverage/2));
         } else {
+//            youTubePlayerView.setVisibility(View.GONE);
             detailRatingView.setVisibility(View.GONE);
         }
 

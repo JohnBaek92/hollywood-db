@@ -1,35 +1,20 @@
 package com.johnbaek.hollywooddb.SearchPage;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.animation.Animation;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.ScaleAnimation;
-import android.widget.CompoundButton;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
-
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
 import com.johnbaek.hollywooddb.DetailPage.DetailActivity;
 import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.model.SearchItem;
-import com.johnbaek.hollywooddb.model.SearchListings;
-import com.johnbaek.hollywooddb.network.MovieAPI;
-import com.johnbaek.hollywooddb.network.RetrofitClient;
-
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity implements SearchPageContract.View, SearchListingsAdapter.SearchListingClickListener, CategorizedSearchFragment.OnFragmentInteractionListener {
     private SearchListingsAdapter adapter;
@@ -66,7 +51,9 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.fetchResults();
+        if(adapter != null) {
+            presenter.fetchResults();
+        }
     }
 
     public void displaySearchResultText(String searchSubject) {

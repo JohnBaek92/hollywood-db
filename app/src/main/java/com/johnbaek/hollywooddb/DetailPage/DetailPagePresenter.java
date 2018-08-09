@@ -25,9 +25,9 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
     public void setDetailSubject(SearchItem searchItem){
         this.detailSubject = searchItem;
         if(detailSubject.getMediaType().equals(PERSON)){
-            model.retrievePersonOverview(searchItem);
+            model.retrievePersonOverview(detailSubject);
         } else {
-            view.displayDetailView();
+            model.retrieveTrailers(detailSubject);
         }
     }
 
@@ -61,6 +61,8 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
     public Float getVoteAverage(){
         return model.setVoteAverage(detailSubject);
     }
+
+    public String getTrailer() { return detailSubject.getTrailerKey(); }
 
     public String getOverview(){
         return detailSubject.getOverview();

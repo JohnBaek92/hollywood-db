@@ -4,6 +4,8 @@ import android.net.Uri;
 
 import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
+import com.johnbaek.hollywooddb.model.SearchListings;
+import com.johnbaek.hollywooddb.model.TrailerListings;
 import com.johnbaek.hollywooddb.network.MovieAPI;
 import com.johnbaek.hollywooddb.network.RetrofitClient;
 
@@ -36,6 +38,31 @@ public class DetailPageModel implements DetailPageContract.Model {
 
     public void setPersonOverview(String overview, SearchItem searchItem){
         searchItem.setOverview(overview);
+    }
+
+    public void setTrailerKey(String trailerKey, SearchItem searchItem){
+        searchItem.setTrailerKey(trailerKey);
+    }
+
+    public void retrieveTrailers(SearchItem searchItem){
+        String mediaType = searchItem.getMediaType();
+        int databaseId = searchItem.getDatabaseId();
+        Call<TrailerListings> trailers = movieAPI.getTrailers(mediaType, databaseId);
+        trailers.enqueue(new Callback<TrailerListings>() {
+            @Override
+            public void onResponse(Call<TrailerListings> call, Response<TrailerListings> response) {
+                if(response.isSuccessful() && !response.body().getTrailerListings().isEmpty()){
+                    String trailerKey = response.body().getTrailerListings().get(0).getKey();
+                    setTrailerKey(trailerKey, searchItem);
+                }
+                presenter.onPersonRetrievedSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<TrailerListings> call, Throwable t) {
+                presenter.onSearchResultsRetrievedFailed(t);
+            }
+        });
     }
 
     public void retrievePersonOverview(SearchItem searchItem){

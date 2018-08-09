@@ -2,13 +2,8 @@ package com.johnbaek.hollywooddb.network;
 
 import com.johnbaek.hollywooddb.model.SearchItem;
 import com.johnbaek.hollywooddb.model.SearchListings;
+import com.johnbaek.hollywooddb.model.TrailerListings;
 
-import java.io.IOException;
-
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -16,6 +11,8 @@ import retrofit2.http.Query;
 
 public interface MovieAPI {
     String QUERY = "query";
+    String ID = "id";
+    String MEDIA = "media";
 
     @GET("/3/movie/top_rated")
     Call<SearchListings> getTopMovies();
@@ -39,5 +36,8 @@ public interface MovieAPI {
     Call<SearchListings> getPeopleQueries(@Query(QUERY) String query);
 
     @GET("/3/person/{id}")
-    Call<SearchItem> getPersonQuery(@Path("id") int id);
+    Call<SearchItem> getPersonQuery(@Path(ID) int id);
+
+    @GET("/3/{media}/{id}/videos")
+    Call<TrailerListings> getTrailers(@Path(MEDIA) String media, @Path(ID) int id);
 }
