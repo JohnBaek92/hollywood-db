@@ -1,6 +1,5 @@
 package com.johnbaek.hollywooddb.DetailPage;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +21,7 @@ import com.johnbaek.hollywooddb.network.YouTubeClient;
 public class DetailActivity extends YouTubeBaseActivity implements DetailPageContract.View {
     private DetailPageContract.Presenter presenter;
     private static String PERSON = "person";
-    private static String SEARCHITEM = "searchItem";
+    private static String SEARCH_ITEM = "searchItem";
     private YouTubePlayer.OnInitializedListener onInitializedListener;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
         setContentView(R.layout.detail_layout);
 
 
-        SearchItem searchItem = (SearchItem) getIntent().getSerializableExtra(SEARCHITEM);
+        SearchItem searchItem = (SearchItem) getIntent().getSerializableExtra(SEARCH_ITEM);
 
         presenter = new DetailPagePresenter(this);
         presenter.setDetailSubject(searchItem);
@@ -85,7 +84,6 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
             voteAverage = presenter.getVoteAverage();
             detailRatingView.setRating(Math.round(voteAverage/2));
         } else {
-//            youTubePlayerView.setVisibility(View.GONE);
             detailRatingView.setVisibility(View.GONE);
         }
 

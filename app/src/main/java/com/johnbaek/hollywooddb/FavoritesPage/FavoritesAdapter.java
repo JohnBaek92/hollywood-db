@@ -92,7 +92,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         favoritesViewHolder.favoriteToggle.setOnClickListener(view -> toggleFavoriteAndRemove(favoriteToggle, favoriteDBCheck, i));
     }
 
-    public void toggleFavoriteAndRemove(ToggleButton favoriteToggle, Favorites favorite, int i){
+    private void toggleFavoriteAndRemove(ToggleButton favoriteToggle, Favorites favorite, int i){
         Util.onFavoriteClick(favoriteToggle, favorite);
         favorites.remove(i);
         notifyDataSetChanged();
@@ -124,7 +124,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         RatingBar favoriteRating;
         SearchItem favoriteItem;
 
-        public FavoritesViewHolder(@NonNull View view) {
+        FavoritesViewHolder(@NonNull View view) {
             super(view);
 
             favoriteBackground = view.findViewById(R.id.favorite_background);

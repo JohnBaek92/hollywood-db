@@ -8,7 +8,7 @@ public class FavoritesPagePresenter implements FavoritesPageContract.Presenter {
     private FavoritesPageContract.Model model;
     private FavoritesPageContract.View view;
 
-    public FavoritesPagePresenter(FavoritesActivity view){
+    FavoritesPagePresenter(FavoritesActivity view){
         this.view = view;
         this.model = new FavoritesPageModel(this);
     }

@@ -21,14 +21,13 @@ public class DetailPageModel implements DetailPageContract.Model {
     private static String POSTER_SIZE_185 = "/w185";
     private MovieAPI movieAPI;
 
-    public DetailPageModel(DetailPagePresenter presenter){
+    DetailPageModel(DetailPagePresenter presenter){
         this.movieAPI = RetrofitClient.getRetrofitMovieClient();
         this.presenter = presenter;
     }
 
     public String setMediaType(SearchItem searchItem) {
-        String mediaType = searchItem.getMediaType() != null ? searchItem.getMediaType() : MOVIE;
-        return mediaType;
+        return searchItem.getMediaType() != null ? searchItem.getMediaType() : MOVIE;
     }
 
     public String setID(SearchItem searchItem){
@@ -36,11 +35,11 @@ public class DetailPageModel implements DetailPageContract.Model {
         return ID;
     }
 
-    public void setPersonOverview(String overview, SearchItem searchItem){
+    private void setPersonOverview(String overview, SearchItem searchItem){
         searchItem.setOverview(overview);
     }
 
-    public void setTrailerKey(String trailerKey, SearchItem searchItem){
+    private void setTrailerKey(String trailerKey, SearchItem searchItem){
         searchItem.setTrailerKey(trailerKey);
     }
 
@@ -101,8 +100,7 @@ public class DetailPageModel implements DetailPageContract.Model {
 
     public Float setVoteAverage(SearchItem searchItem){
         if (searchItem.getMediaType() == null || !searchItem.getMediaType().equals(PERSON)) {
-            Float voteAverage = searchItem.getVoteAverage();
-            return voteAverage;
+            return searchItem.getVoteAverage();
         }
        else {
             return 0.1f;

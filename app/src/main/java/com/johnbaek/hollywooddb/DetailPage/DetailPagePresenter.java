@@ -17,7 +17,7 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
     private DetailPageContract.Model model;
     private static String PERSON ="person";
 
-    public DetailPagePresenter(DetailActivity view) {
+    DetailPagePresenter(DetailActivity view) {
         this.view = view;
         this.model = new DetailPageModel(this);
     }

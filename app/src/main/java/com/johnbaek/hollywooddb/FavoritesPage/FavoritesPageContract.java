@@ -4,7 +4,7 @@ import com.johnbaek.hollywooddb.Database.Favorites;
 
 import java.util.List;
 
-public class FavoritesPageContract {
+class FavoritesPageContract {
     interface Model {
         void retrieveFavorites();
     }

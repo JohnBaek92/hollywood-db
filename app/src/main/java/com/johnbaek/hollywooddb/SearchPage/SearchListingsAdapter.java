@@ -20,8 +20,6 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 import java.util.ArrayList;
 
 public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAdapter.SearchListingViewHolder> {
-    private SearchPageContract.Presenter presenter;
-
     public interface SearchListingClickListener {
         void onSearchItemClick(SearchItem searchItem);
     }
@@ -121,7 +119,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
         }
     }
 
-    public void setSearchItemListings(ArrayList<SearchItem> searchItemListings){
+    void setSearchItemListings(ArrayList<SearchItem> searchItemListings){
         this.searchItemListings = searchItemListings;
     }
 
@@ -134,7 +132,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
         ToggleButton favoriteToggle;
 
 
-        public SearchListingViewHolder(@NonNull View view) {
+        SearchListingViewHolder(@NonNull View view) {
             super(view);
             searchBackground = view.findViewById(R.id.search_background);
             searchMediaType = view.findViewById(R.id.search_media_type);

@@ -33,8 +33,6 @@ public class Util {
     }
 
     static public String getPosterURL(String filePath,  String posterSize) {
-        String posterURL = BASE_URL + posterSize + filePath;
-
-        return posterURL;
+        return BASE_URL + posterSize + filePath;
     }
 }

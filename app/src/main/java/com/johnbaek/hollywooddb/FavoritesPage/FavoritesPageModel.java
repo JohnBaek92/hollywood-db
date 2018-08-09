@@ -5,7 +5,7 @@ import com.johnbaek.hollywooddb.Database.DatabaseInitializer;
 public class FavoritesPageModel implements FavoritesPageContract.Model {
     private FavoritesPageContract.Presenter presenter;
 
-    public FavoritesPageModel(FavoritesPagePresenter presenter){
+    FavoritesPageModel(FavoritesPagePresenter presenter){
         this.presenter = presenter;
     }
 

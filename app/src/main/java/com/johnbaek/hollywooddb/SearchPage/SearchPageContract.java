@@ -24,7 +24,6 @@ public interface SearchPageContract {
 
     interface Presenter {
         void fetchResults();
-        String getSearchSubject();
         void setSearchSubject(String searchSubject);
         void setMediaType(String mediaType);
         String getMediaType();

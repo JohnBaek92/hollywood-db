@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
 import com.johnbaek.hollywooddb.DetailPage.DetailActivity;
@@ -22,12 +21,8 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
     private RecyclerView recyclerView;
     private SearchPageContract.Presenter presenter;
     private final static String SEARCH = "search";
-    private final static String SEARCHITEM = "searchItem";
-    private final static String MEDIATYPE = "mediaType";
-    private final static String PERSON = "person";
-    private final static String MOVIE = "movie";
-    private final static String TV = "tv";
-    private final static String ALL = "all";
+    private final static String SEARCH_ITEM = "searchItem";
+    private final static String MEDIA_TYPE = "mediaType";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +31,7 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
         presenter = new SearchPagePresenter(this);
 
         String searchSubject = getIntent().getStringExtra(SEARCH);
-        String mediaType = getIntent().getStringExtra(MEDIATYPE);
+        String mediaType = getIntent().getStringExtra(MEDIA_TYPE);
 
         presenter.setSearchSubject(searchSubject);
         presenter.setMediaType(mediaType);
@@ -84,7 +79,7 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
     @Override
     public void onSearchItemClick(SearchItem searchItem) {
         Intent intent = new Intent(SearchActivity.this, DetailActivity.class);
-        intent.putExtra(SEARCHITEM, searchItem);
+        intent.putExtra(SEARCH_ITEM, searchItem);
         startActivity(intent);
     }
 }

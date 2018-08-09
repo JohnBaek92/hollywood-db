@@ -8,27 +8,24 @@ import com.johnbaek.hollywooddb.HollywoodDB;
 import java.util.List;
 
 public class DatabaseInitializer {
-//    final static FavoritesDatabase db = FavoritesDatabase.getFavoritesDatabase(HollywoodDB.getAppContext());
-    final static FavoritesDatabase db = HollywoodDB.getFavoritesDatabase();
+    private final static FavoritesDatabase db = HollywoodDB.getFavoritesDatabase();
 
-    public static Favorites addFavorite(Favorites favorite){
+    private static Favorites addFavorite(Favorites favorite){
         db.favoritesDaoAccess().insertFavorite(favorite);
         return favorite;
     }
 
-    public static String deleteFavorite(Favorites favorite){
+    private static String deleteFavorite(Favorites favorite){
         db.favoritesDaoAccess().deleteFavorite(favorite);
         return favorite.getIdentifier();
     }
 
-    public static List<Favorites> getAllFavorites(){
-        List<Favorites> favorites = db.favoritesDaoAccess().fetchAllFavorites();
-        return favorites;
+    private static List<Favorites> getAllFavorites(){
+        return db.favoritesDaoAccess().fetchAllFavorites();
     }
 
-    public static Favorites getFavoriteByIdentifier(String identifier){
-        Favorites favorite = db.favoritesDaoAccess().fetchFavoriteByIdentifier(identifier);
-        return favorite;
+    private static Favorites getFavoriteByIdentifier(String identifier){
+        return db.favoritesDaoAccess().fetchFavoriteByIdentifier(identifier);
     }
 
     public static class AsyncGetFavorites extends AsyncTask<Void, Void, List<Favorites>> {
@@ -36,7 +33,7 @@ public class DatabaseInitializer {
             void processFinishAsync(List<Favorites> favorites);
         }
 
-        public FavoritesList favoritesList;
+        FavoritesList favoritesList;
 
         public AsyncGetFavorites(FavoritesList favoritesList){
             this.favoritesList = favoritesList;

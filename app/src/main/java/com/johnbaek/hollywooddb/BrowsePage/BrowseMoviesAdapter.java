@@ -61,7 +61,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
         return movies.size();
     }
 
-    public void setMovies(ArrayList<SearchItem> movies) {
+    void setMovies(ArrayList<SearchItem> movies) {
         this.movies = movies;
     }
 
@@ -71,7 +71,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
         ImageView browseMoviePhoto;
         SearchItem movie;
 
-        public BrowseMovieViewHolder(View view) {
+        BrowseMovieViewHolder(View view) {
             super(view);
             browseMovieTitle = view.findViewById(R.id.browse_movie_title);
             browseMovieRating = view.findViewById(R.id.browse_movie_rating);

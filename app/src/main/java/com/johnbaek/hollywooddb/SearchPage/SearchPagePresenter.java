@@ -52,10 +52,6 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
         }
     }
 
-    public String getSearchSubject() {
-        return this.searchSubject;
-    }
-
     public void setSearchSubject(String searchSubject) {
         this.searchSubject = searchSubject;
         view.displaySearchResultText(searchSubject);
