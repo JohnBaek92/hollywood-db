@@ -51,8 +51,8 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
         }
     }
 
-    public void showToastMessage(String error){
-        Util.showToastMessage(error, this);
+    public void showToastMessage(String message){
+        Util.showToastMessage(message, this);
     }
 
 

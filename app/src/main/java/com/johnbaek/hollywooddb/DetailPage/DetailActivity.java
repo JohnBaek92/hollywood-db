@@ -35,8 +35,8 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
         presenter.setDetailSubject(searchItem);
     }
 
-    public void showToastMessage(String throwable){
-        Util.showToastMessage(throwable, this);
+    public void showToastMessage(String message){
+        Util.showToastMessage(message, this);
     }
 
     public void displayDetailView(){
@@ -51,7 +51,8 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                    youTubePlayer.cueVideo(presenter.getTrailer());
+                youTubePlayer.cueVideo(presenter.getTrailer());
+                youTubePlayer.setShowFullscreenButton(false);
             }
 
             @Override

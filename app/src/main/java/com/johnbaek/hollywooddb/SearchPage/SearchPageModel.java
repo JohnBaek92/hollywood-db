@@ -17,7 +17,7 @@ public class SearchPageModel implements SearchPageContract.Model {
     private SearchPageContract.Presenter presenter;
     private MovieAPI movieAPI;
 
-    public  SearchPageModel(SearchPagePresenter presenter) {
+    SearchPageModel(SearchPagePresenter presenter) {
         this.presenter = presenter;
         this.movieAPI = RetrofitClient.getRetrofitMovieClient();
     }
@@ -42,7 +42,7 @@ public class SearchPageModel implements SearchPageContract.Model {
         enqueueListings(searchListings, mediaType);
     }
 
-    public void enqueueListings(Call<SearchListings> searchListings, String mediaType){
+    private void enqueueListings(Call<SearchListings> searchListings, String mediaType){
         searchListings.enqueue(new Callback<SearchListings>() {
             @Override
             public void onResponse(@NonNull Call<SearchListings> call, @NonNull Response<SearchListings> response) {

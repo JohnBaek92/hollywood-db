@@ -7,4 +7,7 @@
     <string name="search_movies">in Movies</string>
     <string name="search_tv">in TV</string>
     <string name="my_favorites"><b>My Favorites</b></string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="now_playing_movies">Now Playing Movies</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
 </resources>

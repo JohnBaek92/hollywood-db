@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
@@ -51,8 +53,8 @@ public class BrowseActivity extends AppCompatActivity implements BrowsePageContr
         recyclerView.setLayoutManager(new LinearLayoutManager(BrowseActivity.this, LinearLayoutManager.HORIZONTAL, false));
     }
 
-    public void showToastMessage(String throwable){
-        Util.showToastMessage(throwable, this);
+    public void showToastMessage(String message){
+        Util.showToastMessage(message, this);
     }
 
     @Override

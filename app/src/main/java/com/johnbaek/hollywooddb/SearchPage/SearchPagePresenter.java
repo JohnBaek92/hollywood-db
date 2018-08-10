@@ -25,7 +25,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
     private final static String TV = "tv";
     private final static String ALL = "all";
 
-    public SearchPagePresenter(SearchActivity view) {
+    SearchPagePresenter(SearchActivity view) {
         this.view = view;
         this.searchSubject = "";
         this.mediaType = "";

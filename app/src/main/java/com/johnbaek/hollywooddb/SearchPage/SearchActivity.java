@@ -41,7 +41,6 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = CategorizedSearchFragment.newInstance();
         fragmentManager.beginTransaction().add(R.id.search_fragment_container, fragment).commit();
-
     }
 
     @Override
@@ -64,8 +63,8 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
         }
     }
 
-    public void showToastMessage(String throwable){
-        Util.showToastMessage(throwable, this);
+    public void showToastMessage(String message){
+        Util.showToastMessage(message, this);
     }
 
     public void displayResults(ArrayList<SearchItem> searchItems) {
