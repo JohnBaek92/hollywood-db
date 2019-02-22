@@ -16,30 +16,34 @@ import retrofit2.Response;
 public class SearchPageModel implements SearchPageContract.Model {
     private SearchPageContract.Presenter presenter;
     private MovieAPI movieAPI;
+    private final static String PERSON = "person";
+    private final static String MOVIE = "movie";
+    private final static String TV = "tv";
+    private final static String ALL = "all";
 
     SearchPageModel(SearchPagePresenter presenter) {
         this.presenter = presenter;
         this.movieAPI = RetrofitClient.getRetrofitMovieClient();
     }
 
-    public void retrieveAllResults(String searchSubject, String mediaType) {
+    public void retrieveAllResults(String searchSubject) {
         Call<SearchListings> searchListings = movieAPI.getSearchAll(searchSubject);
-        enqueueListings(searchListings, mediaType);
+        enqueueListings(searchListings, ALL);
     }
 
-    public void retrievePeopleResults(String searchSubject, String mediaType) {
+    public void retrievePeopleResults(String searchSubject) {
         Call<SearchListings> searchListings = movieAPI.getPeopleQueries(searchSubject);
-        enqueueListings(searchListings, mediaType);
+        enqueueListings(searchListings, PERSON);
     }
 
-    public void retrieveMovieResults(String searchSubject, String mediaType){
+    public void retrieveMovieResults(String searchSubject){
         Call<SearchListings> searchListings = movieAPI.getMovieQueries(searchSubject);
-        enqueueListings(searchListings, mediaType);
+        enqueueListings(searchListings, MOVIE);
     }
 
-    public void retrieveTvResults(String searchSubject, String mediaType){
+    public void retrieveTvResults(String searchSubject){
         Call<SearchListings> searchListings = movieAPI.getTvQueries(searchSubject);
-        enqueueListings(searchListings, mediaType);
+        enqueueListings(searchListings, TV);
     }
 
     private void enqueueListings(Call<SearchListings> searchListings, String mediaType){

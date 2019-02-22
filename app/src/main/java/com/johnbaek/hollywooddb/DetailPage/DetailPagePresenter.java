@@ -17,13 +17,14 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
     private DetailPageContract.Model model;
     private static String PERSON ="person";
 
-    DetailPagePresenter(DetailActivity view) {
+    DetailPagePresenter(DetailActivity view, SearchItem searchItem) {
         this.view = view;
         this.model = new DetailPageModel(this);
+        this.detailSubject = searchItem;
+        setDetailSubject();
     }
 
-    public void setDetailSubject(SearchItem searchItem){
-        this.detailSubject = searchItem;
+    private void setDetailSubject(){
         if(detailSubject.getMediaType().equals(PERSON)){
             model.retrievePersonOverview(detailSubject);
         } else {
@@ -39,9 +40,9 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
         return model.setMediaType(detailSubject);
     }
 
-    public Uri getPosterURI(){
+    public Uri getPosterURI() {
         String mediaType = model.setMediaType(detailSubject);
-        return model.createPosterURI(detailSubject, mediaType);
+        return detailSubject.createPosterURI(mediaType);
     }
 
     public String getPosterURL(){
@@ -56,23 +57,17 @@ public class DetailPagePresenter implements DetailPageContract.Presenter {
         return model.setID(detailSubject);
     }
 
-    public int getDatabaseId(){ return detailSubject.getDatabaseId(); }
+    public int getDatabaseId() { return detailSubject.getDatabaseId(); }
 
-    public Float getVoteAverage(){
-        return model.setVoteAverage(detailSubject);
-    }
-
-    public String getTrailer() { return detailSubject.getTrailerKey(); }
-
-    public String getOverview(){
-        return detailSubject.getOverview();
+    public Float getVoteAverage() {
+        return detailSubject.setVoteAverage();
     }
 
     public void onPersonRetrievedSuccessful(){
-        view.displayDetailView();
-    };
+        view.displayDetailView(detailSubject);
+    }
 
-    public void setFavoriteStatus(ToggleButton detailToggleFavorite){
+    public void setFavoriteStatus(ToggleButton detailToggleFavorite) {
         new DatabaseInitializer.AsyncGetFavorites(favorites -> {
             HashSet<String> hashFavoriteNames = new HashSet<>();
             for (Favorites favorite : favorites) {

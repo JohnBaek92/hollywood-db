@@ -22,10 +22,7 @@ public class Util {
         BounceInterpolator bounceInterpolator = new BounceInterpolator();
         scaleAnimation.setInterpolator(bounceInterpolator);
         new DatabaseInitializer.AsyncToggleFavorite(favoriteReturn -> {}).execute(favorite);
-        favoriteToggle.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            //animation
-            compoundButton.startAnimation(scaleAnimation);
-        });
+        favoriteToggle.startAnimation(scaleAnimation);
     }
 
     static public void showToastMessage(String message, Context context) {

@@ -20,26 +20,23 @@ import com.johnbaek.hollywooddb.network.YouTubeClient;
 
 public class DetailActivity extends YouTubeBaseActivity implements DetailPageContract.View {
     private DetailPageContract.Presenter presenter;
-    private static String PERSON = "person";
-    private static String SEARCH_ITEM = "searchItem";
-    private YouTubePlayer.OnInitializedListener onInitializedListener;
+    private static final String PERSON = "person";
+    private static final String SEARCH_ITEM = "searchItem";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_layout);
 
-
         SearchItem searchItem = (SearchItem) getIntent().getSerializableExtra(SEARCH_ITEM);
 
-        presenter = new DetailPagePresenter(this);
-        presenter.setDetailSubject(searchItem);
+        presenter = new DetailPagePresenter(this, searchItem);
     }
 
     public void showToastMessage(String message){
         Util.showToastMessage(message, this);
     }
 
-    public void displayDetailView(){
+    public void displayDetailView(SearchItem detailSubject){
         TextView detailMediaTypeView = findViewById(R.id.detail_media_type);
         TextView detailIDView = findViewById(R.id.detail_id);
         SimpleDraweeView detailImageView = findViewById(R.id.detail_image);
@@ -48,10 +45,10 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
         ToggleButton detailToggleFavorite = findViewById(R.id.detail_favorite_toggle);
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youTubePlayer);
 
-        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+        YouTubePlayer.OnInitializedListener onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.cueVideo(presenter.getTrailer());
+                youTubePlayer.cueVideo(detailSubject.getTrailerKey());
                 youTubePlayer.setShowFullscreenButton(false);
             }
 
@@ -61,7 +58,7 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
             }
         };
 
-        if (presenter.getTrailer() != null){
+        if (detailSubject.getTrailerKey() != null){
             youTubePlayerView.initialize(YouTubeClient.getApiKey(), onInitializedListener);
         } else {
             youTubePlayerView.setVisibility(View.GONE);
@@ -70,7 +67,7 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
         String mediaType = presenter.getMediaType();
         detailMediaTypeView.setText(mediaType.toUpperCase());
 
-        String overview = presenter.getOverview();
+        String overview = detailSubject.getOverview();
         detailOverviewView.setText(overview);
 
         String ID = presenter.getID();

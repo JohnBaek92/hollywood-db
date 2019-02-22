@@ -16,9 +16,6 @@ import retrofit2.Response;
 public class DetailPageModel implements DetailPageContract.Model {
     DetailPageContract.Presenter presenter;
     private static String MOVIE = "movie";
-    private static String TV = "tv";
-    private static String PERSON = "person";
-    private static String POSTER_SIZE_185 = "/w185";
     private MovieAPI movieAPI;
 
     DetailPageModel(DetailPagePresenter presenter){
@@ -35,14 +32,6 @@ public class DetailPageModel implements DetailPageContract.Model {
         return ID;
     }
 
-    private void setPersonOverview(String overview, SearchItem searchItem){
-        searchItem.setOverview(overview);
-    }
-
-    private void setTrailerKey(String trailerKey, SearchItem searchItem){
-        searchItem.setTrailerKey(trailerKey);
-    }
-
     public void retrieveTrailers(SearchItem searchItem){
         String mediaType = searchItem.getMediaType();
         int databaseId = searchItem.getDatabaseId();
@@ -52,7 +41,7 @@ public class DetailPageModel implements DetailPageContract.Model {
             public void onResponse(Call<TrailerListings> call, Response<TrailerListings> response) {
                 if(response.isSuccessful() && !response.body().getTrailerListings().isEmpty()){
                     String trailerKey = response.body().getTrailerListings().get(0).getKey();
-                    setTrailerKey(trailerKey, searchItem);
+                    searchItem.setTrailerKey(trailerKey);
                 }
                 presenter.onPersonRetrievedSuccessful();
             }
@@ -71,7 +60,7 @@ public class DetailPageModel implements DetailPageContract.Model {
             @Override
             public void onResponse(Call<SearchItem> call, Response<SearchItem> response) {
                 if(response.isSuccessful()){
-                    setPersonOverview(response.body().getBiography(), searchItem);
+                    searchItem.setPersonOverview(response.body().getBiography());
                 }
                 presenter.onPersonRetrievedSuccessful();
             }
@@ -81,29 +70,5 @@ public class DetailPageModel implements DetailPageContract.Model {
                 presenter.onSearchResultsRetrievedFailed(t);
             }
         });
-    }
-
-    public Uri createPosterURI(SearchItem searchItem, String mediaType){
-        Uri uri;
-        if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
-            String posterURI = searchItem.getPosterPath();
-            String posterURL = Util.getPosterURL(posterURI, POSTER_SIZE_185);
-            uri = Uri.parse(posterURL);
-        } else {
-            String profileURI = searchItem.getProfilePath();
-            String profileURL = Util.getPosterURL(profileURI, POSTER_SIZE_185);
-            uri = Uri.parse(profileURL);
-        }
-
-        return uri;
-    }
-
-    public Float setVoteAverage(SearchItem searchItem){
-        if (searchItem.getMediaType() == null || !searchItem.getMediaType().equals(PERSON)) {
-            return searchItem.getVoteAverage();
-        }
-       else {
-            return 0.1f;
-        }
     }
 }

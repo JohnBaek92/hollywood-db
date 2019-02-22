@@ -33,7 +33,6 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
     private static String RED = "#cc1108";
     private static String GREEN = "#0a912b";
     private static String BLUE = "#0832af";
-    private Util util = new Util();
 
     SearchListingsAdapter(SearchListingClickListener clickListener){
         this.clickListener = clickListener;
@@ -50,6 +49,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
 
     @Override
     public void onBindViewHolder(@NonNull final SearchListingsAdapter.SearchListingViewHolder searchListingViewHolder, int i) {
+        searchListingViewHolder.favoriteToggle.setOnCheckedChangeListener(null);
         SearchItem searchItem = searchItemListings.get(i);
         searchListingViewHolder.searchItem = searchItem;
 
@@ -58,9 +58,9 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
 
         String identifier;
         Uri uri;
-        Integer voteAverage = null;
-        String profileURI = null;
-        String posterURI = null;
+        Integer voteAverage;
+        String profileURI;
+        String posterURI;
         Favorites favorite;
 
         String overview = searchItem.getOverview();
@@ -100,7 +100,6 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
 
         final ToggleButton favoriteToggle = searchListingViewHolder.favoriteToggle;
 
-
         favoriteToggle.setChecked(searchItem.isFavorite());
 
         favoriteToggle.setOnClickListener(view -> Util.onFavoriteClick(favoriteToggle, favorite));
@@ -108,7 +107,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
 
     @Override
     public int getItemCount() {
-        return searchItemListings.size();
+        return searchItemListings != null ? searchItemListings.size() : 0;
     }
 
     public void clear() {

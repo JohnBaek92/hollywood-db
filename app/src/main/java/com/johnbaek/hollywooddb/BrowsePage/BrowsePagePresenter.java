@@ -1,5 +1,6 @@
 package com.johnbaek.hollywooddb.BrowsePage;
 
+import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
 import com.johnbaek.hollywooddb.model.SearchListings;
@@ -32,11 +33,19 @@ public class BrowsePagePresenter implements BrowsePageContract.Presenter {
         model.retrieveNowPlayingMovies();
     }
 
-    public void onMoviesRetrievedSuccessful(Response<SearchListings> response, String recyclerView) {
-        SearchListings unformattedMovies = response.body();
-        ArrayList<SearchItem> movies = unformattedMovies.getSearchItemListings();
-        view.displayMovies(movies, recyclerView);
+    public void onTopMoviesRetrievedSuccessful(Response<SearchListings> response) {
+        ArrayList<SearchItem> movies = response.body().getSearchItemListings();
+        view.displayMovies(movies, R.id.browse_top_movies_recycler);
+    }
 
+    public void onUpcomingMoviesRetrievedSuccessful(Response<SearchListings> response) {
+        ArrayList<SearchItem> movies = response.body().getSearchItemListings();
+        view.displayMovies(movies, R.id.browse_upcoming_movies_recycler);
+    }
+
+    public void onNowPlayingMoviesRetrievedSuccessful(Response<SearchListings> response) {
+        ArrayList<SearchItem> movies = response.body().getSearchItemListings();
+        view.displayMovies(movies, R.id.now_playing_movies_recycler);
     }
 
     public void onMoviesRetrievedFailed(Throwable throwable) {

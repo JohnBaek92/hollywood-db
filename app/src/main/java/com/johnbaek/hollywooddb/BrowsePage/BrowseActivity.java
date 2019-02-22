@@ -21,13 +21,12 @@ import com.johnbaek.hollywooddb.R;
 
 import java.util.ArrayList;
 
-public class BrowseActivity extends AppCompatActivity implements BrowsePageContract.View, BrowseMoviesAdapter.BrowseListingsClickListener, CategorizedSearchFragment.OnFragmentInteractionListener {
+public class BrowseActivity extends AppCompatActivity implements BrowsePageContract.View, BrowseMoviesAdapter.BrowseListingsClickListener {
     private BrowseMoviesAdapter adapter;
     private BrowsePageContract.Presenter presenter;
-    private static String IDENTIFIER ="id";
-    private static String SEARCH_ITEM = "searchItem";
+    private static final String SEARCH_ITEM = "searchItem";
 
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browse_layout);
 
@@ -38,17 +37,14 @@ public class BrowseActivity extends AppCompatActivity implements BrowsePageContr
         fragmentManager.beginTransaction().add(R.id.search_fragment_container, fragment).commit();
     }
 
-    public void displayMovies(ArrayList<SearchItem> movies, String recyclerViewID) {
-        adapter = new BrowseMoviesAdapter(this);
-        adapter.setMovies(movies);
+    public void displayMovies(ArrayList<SearchItem> movies, int recyclerViewID) {
+        adapter = new BrowseMoviesAdapter(this, movies);
 
-        Resources res = getResources();
-        int id = res.getIdentifier(recyclerViewID, IDENTIFIER, getApplicationContext().getPackageName());
-        RecyclerView recyclerView = findViewById(id);
+        RecyclerView recyclerView = findViewById(recyclerViewID);
         setAdapterToRecycler(adapter, recyclerView);
     }
 
-    public void setAdapterToRecycler(BrowseMoviesAdapter adapter, RecyclerView recyclerView) {
+    private void setAdapterToRecycler(BrowseMoviesAdapter adapter, RecyclerView recyclerView) {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(BrowseActivity.this, LinearLayoutManager.HORIZONTAL, false));
     }

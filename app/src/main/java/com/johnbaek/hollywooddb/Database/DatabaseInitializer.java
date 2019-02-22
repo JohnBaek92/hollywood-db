@@ -3,12 +3,12 @@ package com.johnbaek.hollywooddb.Database;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.johnbaek.hollywooddb.HollywoodDB;
+import com.johnbaek.hollywooddb.HollywoodDBApplication;
 
 import java.util.List;
 
 public class DatabaseInitializer {
-    private final static FavoritesDatabase db = HollywoodDB.getFavoritesDatabase();
+    private final static FavoritesDatabase db = HollywoodDBApplication.getFavoritesDatabase();
 
     private static Favorites addFavorite(Favorites favorite){
         db.favoritesDaoAccess().insertFavorite(favorite);
@@ -71,12 +71,12 @@ public class DatabaseInitializer {
         @Override
         protected Favorites doInBackground(Favorites... params) {
             Favorites favorite = params[0];
-            Favorites temp = DatabaseInitializer.getFavoriteByIdentifier(favorite.getIdentifier());
+            Favorites favoriteChecker = DatabaseInitializer.getFavoriteByIdentifier(favorite.getIdentifier());
 
-            if (temp == null){
+            if (favoriteChecker == null){
                 addFavorite(favorite);
             } else {
-                deleteFavorite(temp);
+                deleteFavorite(favoriteChecker);
             }
             return favorite;
         }

@@ -18,7 +18,7 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 
 import java.util.List;
 
-public class FavoritesActivity extends AppCompatActivity implements FavoritesAdapter.FavoritesClickListener, CategorizedSearchFragment.OnFragmentInteractionListener, FavoritesPageContract.View{
+public class FavoritesActivity extends AppCompatActivity implements FavoritesAdapter.FavoritesClickListener, FavoritesPageContract.View{
     private RecyclerView recyclerView;
     private FavoritesAdapter adapter;
     private final static String SEARCH_ITEM = "searchItem";
@@ -32,7 +32,11 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
 
         presenter = new FavoritesPagePresenter(this);
 
-        presenter.fetchFavorites();
+        adapter = new FavoritesAdapter(this);
+
+        recyclerView = findViewById(R.id.favorites_recycler_view);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(FavoritesActivity.this, LinearLayoutManager.VERTICAL, false));
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = CategorizedSearchFragment.newInstance();
@@ -45,7 +49,7 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
         presenter.fetchFavorites();
     }
 
-    public void clearData() {
+    private void clearData() {
         if (adapter != null) {
             adapter.clear();
         }
@@ -59,11 +63,8 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
     public void displayResults(List<Favorites> favorites){
         clearData();
         if(favorites.size() >= 1) {
-            recyclerView = findViewById(R.id.favorites_recycler_view);
-            adapter = new FavoritesAdapter(this);
             adapter.setFavorites(favorites);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(FavoritesActivity.this, LinearLayoutManager.VERTICAL, false));
+            adapter.notifyDataSetChanged();
         } else {
             showToastMessage(NO_FAVORITES);
         }

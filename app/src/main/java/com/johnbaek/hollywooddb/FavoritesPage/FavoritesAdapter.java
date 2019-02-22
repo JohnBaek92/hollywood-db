@@ -1,5 +1,6 @@
 package com.johnbaek.hollywooddb.FavoritesPage;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -28,9 +29,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     private static String W185 = "/w185";
     private static String MOVIE = "movie";
     private static String TV ="tv";
-    private static String RED = "#cc1108";
-    private static String GREEN = "#0a912b";
-    private static String BLUE = "#0832af";
+    private static Context context;
 
     private FavoritesAdapter.FavoritesClickListener clickListener;
     private List<Favorites> favorites = new ArrayList<>();
@@ -43,6 +42,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
     @Override
     public FavoritesAdapter.FavoritesViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.favorites_card_layout, viewGroup, false);
+        context = viewGroup.getContext();
 
         return new FavoritesViewHolder(view);
     }
@@ -77,14 +77,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
             favoritesViewHolder.favoriteRating.setRating(Math.round(favorite.getVoteAverage()/2));
             favoriteItem = new SearchItem(mediaType, favorite.getVoteAverage()+0.1f, favorite.getImageURI(), overview, identifier, null, null, favorite.getDatabaseId());
             if(mediaType.equals(MOVIE)){
-                favoritesViewHolder.favoriteName.setBackgroundColor(Color.parseColor(RED));
+                favoritesViewHolder.favoriteName.setBackgroundColor(context.getColor(R.color.red));
             } else {
-                favoritesViewHolder.favoriteName.setBackgroundColor(Color.parseColor(GREEN));
+                favoritesViewHolder.favoriteName.setBackgroundColor(context.getColor(R.color.green));
             }
         } else {
             favoritesViewHolder.favoriteRating.setVisibility(View.GONE);
             favoriteItem = new SearchItem(mediaType, null, null, overview, null, identifier, favorite.getImageURI(), favorite.getDatabaseId());
-            favoritesViewHolder.favoriteName.setBackgroundColor(Color.parseColor(BLUE));
+            favoritesViewHolder.favoriteName.setBackgroundColor(context.getColor(R.color.blue));
         }
 
         favoritesViewHolder.favoriteItem = favoriteItem;
@@ -100,11 +100,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     @Override
     public int getItemCount() {
-        return favorites.size();
+        return favorites != null ? favorites.size() : 0;
     }
 
     public void setFavorites(List<Favorites> favorites){
         this.favorites = favorites;
+        notifyDataSetChanged();
     }
 
     public void clear() {

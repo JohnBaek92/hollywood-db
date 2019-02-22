@@ -16,7 +16,7 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends AppCompatActivity implements SearchPageContract.View, SearchListingsAdapter.SearchListingClickListener, CategorizedSearchFragment.OnFragmentInteractionListener {
+public class SearchActivity extends AppCompatActivity implements SearchPageContract.View, SearchListingsAdapter.SearchListingClickListener {
     private SearchListingsAdapter adapter;
     private RecyclerView recyclerView;
     private SearchPageContract.Presenter presenter;
@@ -28,15 +28,12 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_layout);
 
-        presenter = new SearchPagePresenter(this);
 
         String searchSubject = getIntent().getStringExtra(SEARCH);
         String mediaType = getIntent().getStringExtra(MEDIA_TYPE);
 
-        presenter.setSearchSubject(searchSubject);
+        presenter = new SearchPagePresenter(this, searchSubject);
         presenter.setMediaType(mediaType);
-
-        presenter.fetchResults();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = CategorizedSearchFragment.newInstance();
@@ -46,13 +43,11 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
     @Override
     protected void onResume() {
         super.onResume();
-        if(adapter != null) {
-            presenter.fetchResults();
-        }
+        presenter.fetchResults();
     }
 
     public void displaySearchResultText(String searchSubject) {
-        String searchSubjectText = String.format("Search Results for \"%s\"", searchSubject);
+        String searchSubjectText = String.format(getString(R.string.search_results_for), searchSubject);
         TextView searchResultText = findViewById(R.id.search_result_text);
         searchResultText.setText(searchSubjectText);
     }

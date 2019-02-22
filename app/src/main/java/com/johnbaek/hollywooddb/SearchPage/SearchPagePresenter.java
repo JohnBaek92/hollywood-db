@@ -25,35 +25,35 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
     private final static String TV = "tv";
     private final static String ALL = "all";
 
-    SearchPagePresenter(SearchActivity view) {
+    SearchPagePresenter(SearchActivity view, String searchSubject) {
         this.view = view;
-        this.searchSubject = "";
+        this.searchSubject = searchSubject;
         this.mediaType = "";
         this.model = new SearchPageModel(this);
+        setSearchSubjectText();
     }
 
     public void fetchResults(){
         view.clearData();
         switch (mediaType) {
             case ALL:
-                model.retrieveAllResults(searchSubject, mediaType);
+                model.retrieveAllResults(searchSubject);
                 break;
             case PERSON:
-                model.retrievePeopleResults(searchSubject, mediaType);
+                model.retrievePeopleResults(searchSubject);
                 break;
             case MOVIE:
-                model.retrieveMovieResults(searchSubject, mediaType);
+                model.retrieveMovieResults(searchSubject);
                 break;
             case TV:
-                model.retrieveTvResults(searchSubject, mediaType);
+                model.retrieveTvResults(searchSubject);
                 break;
             default:
                 break;
         }
     }
 
-    public void setSearchSubject(String searchSubject) {
-        this.searchSubject = searchSubject;
+    private void setSearchSubjectText() {
         view.displaySearchResultText(searchSubject);
     }
 

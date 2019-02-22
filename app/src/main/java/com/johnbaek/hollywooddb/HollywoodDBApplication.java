@@ -9,7 +9,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
 import com.johnbaek.hollywooddb.Database.FavoritesDatabase;
 
-public class HollywoodDB extends Application {
+public class HollywoodDBApplication extends Application {
     private static FavoritesDatabase favoritesDatabase;
 
     public void onCreate() {

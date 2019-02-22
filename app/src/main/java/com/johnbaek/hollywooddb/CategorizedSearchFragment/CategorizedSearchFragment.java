@@ -23,17 +23,13 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
     TextView searchMoviesView;
     TextView searchTvView;
     SearchView searchView;
-    private OnFragmentInteractionListener fragmentInteractionListener;
+//    private OnFragmentInteractionListener fragmentInteractionListener;
     private static String MEDIATYPE = "mediaType";
     private static String PERSON = "person";
     private static String MOVIE = "movie";
     private static String TV = "tv";
     private static String SEARCH = "search";
     private static String ALL = "all";
-
-    public CategorizedSearchFragment() {
-        // Required empty public constructor
-    }
 
     public static CategorizedSearchFragment newInstance(){
         return new CategorizedSearchFragment();
@@ -61,18 +57,18 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            fragmentInteractionListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            fragmentInteractionListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        fragmentInteractionListener = null;
+//        fragmentInteractionListener = null;
     }
 
 
@@ -122,9 +118,9 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
     public boolean onQueryTextChange(String search) {
         if (!search.isEmpty()) {
             searchSuggestions.setVisibility(View.VISIBLE);
-            searchPeopleView.setText(search + " " + getString(R.string.search_people));
-            searchMoviesView.setText(search + " " + getString(R.string.search_movies));
-            searchTvView.setText(search + " " + getString(R.string.search_tv));
+            searchPeopleView.setText(getString(R.string.two_strings_with_space, search, getString(R.string.search_people)));
+            searchMoviesView.setText(getString(R.string.two_strings_with_space, search, getString(R.string.search_movies)));
+            searchTvView.setText(getString(R.string.two_strings_with_space, search, getString(R.string.search_tv)));
         } else {
             searchSuggestions.setVisibility(View.GONE);
         }
@@ -132,7 +128,7 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
         return false;
     }
 
-    public interface OnFragmentInteractionListener {
-
-    }
+//    public interface OnFragmentInteractionListener {
+//
+//    }
 }

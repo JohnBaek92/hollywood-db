@@ -26,8 +26,9 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
     private static String POSTER_SIZE_92 = "/w92";
     private static String MOVIE = "movie";
 
-    BrowseMoviesAdapter(BrowseListingsClickListener clickListener){
+    BrowseMoviesAdapter(BrowseListingsClickListener clickListener, ArrayList<SearchItem> movies){
         this.clickListener = clickListener;
+        this.setMovies(movies);
     }
 
     @NonNull
@@ -58,7 +59,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return movies != null ? movies.size() : 0;
     }
 
     void setMovies(ArrayList<SearchItem> movies) {

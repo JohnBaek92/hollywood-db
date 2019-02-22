@@ -10,4 +10,6 @@
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="now_playing_movies">Now Playing Movies</string>
     <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="two_strings_with_space">%1$s %2$s</string>
+    <string name="search_results_for">Search Results For \"%1$s\"</string>
 </resources>

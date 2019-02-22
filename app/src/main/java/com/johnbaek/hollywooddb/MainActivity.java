@@ -16,7 +16,7 @@ import com.johnbaek.hollywooddb.Database.FavoritesDatabase;
 import com.johnbaek.hollywooddb.FavoritesPage.FavoritesActivity;
 import com.johnbaek.hollywooddb.SearchPage.SearchActivity;
 
-public class MainActivity extends AppCompatActivity implements CategorizedSearchFragment.OnFragmentInteractionListener  {
+public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,24 +30,13 @@ public class MainActivity extends AppCompatActivity implements CategorizedSearch
         fragmentManager.beginTransaction().add(R.id.search_fragment_container, fragment).commit();
     }
 
-    public void enterBrowse(){
+    private void enterBrowse(){
         TextView browseLink = findViewById(R.id.browse_link);
-        browseLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, BrowseActivity.class));
-            }
-        });
+        browseLink.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, BrowseActivity.class)));
     }
 
-    public void enterFavorites(){
+    private void enterFavorites(){
         TextView favoritesLink = findViewById(R.id.my_favorites);
-        favoritesLink.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent (MainActivity.this, FavoritesActivity.class));
-            }
-        });
+        favoritesLink.setOnClickListener(view -> startActivity(new Intent (MainActivity.this, FavoritesActivity.class)));
     }
 }

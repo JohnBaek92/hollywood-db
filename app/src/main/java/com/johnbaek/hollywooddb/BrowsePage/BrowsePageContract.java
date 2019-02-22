@@ -13,19 +13,20 @@ public interface BrowsePageContract {
         void retrieveTopMovies();
         void retrieveUpcomingMovies();
         void retrieveNowPlayingMovies();
-        void enqueueMovies(Call<SearchListings> movies, final String recyclerViewID);
     }
 
     interface View {
-        void displayMovies(ArrayList<SearchItem> movies, String recyclerViewID);
+        void displayMovies(ArrayList<SearchItem> movies, int recyclerViewID);
         void showToastMessage(String message);
     }
 
     interface Presenter {
-        void onMoviesRetrievedSuccessful(Response<SearchListings> response, String recyclerViewID);
         void onMoviesRetrievedFailed(Throwable throwable);
         void fetchTopMovies();
         void fetchUpcomingMovies();
         void fetchNowPlayingMovies();
+        void onTopMoviesRetrievedSuccessful(Response<SearchListings> response);
+        void onUpcomingMoviesRetrievedSuccessful(Response<SearchListings> response);
+        void onNowPlayingMoviesRetrievedSuccessful(Response<SearchListings> response);
     }
 }

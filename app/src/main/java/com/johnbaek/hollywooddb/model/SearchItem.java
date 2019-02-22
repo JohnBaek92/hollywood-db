@@ -1,6 +1,9 @@
 package com.johnbaek.hollywooddb.model;
 
+import android.net.Uri;
+
 import com.google.gson.annotations.SerializedName;
+import com.johnbaek.hollywooddb.Util;
 
 import java.io.Serializable;
 
@@ -24,6 +27,11 @@ public class SearchItem implements Serializable {
     private String biography;
     private String trailerKey;
 
+    private static String MOVIE = "movie";
+    private static String TV = "tv";
+    private static String PERSON = "person";
+    private static String POSTER_SIZE_185 = "/w185";
+
     public SearchItem(String mediaType, Float voteAverage, String posterPath, String overview,
                       String hollywoodTitle, String hollywoodName, String profilePath, int databaseId) {
         this.mediaType = mediaType;
@@ -42,13 +50,11 @@ public class SearchItem implements Serializable {
         return trailerKey;
     }
 
-    public void setTrailerKey(String trailerKey) {
-        this.trailerKey = trailerKey;
-    }
+//    public void setTrailerKey(String trailerKey) {
+//        this.trailerKey = trailerKey;
+//    }
 
     public String getBiography(){ return this.biography; }
-
-    public void setBiography(String biography){ this.biography = biography; }
 
     public int getDatabaseId(){ return databaseId; }
 
@@ -58,6 +64,15 @@ public class SearchItem implements Serializable {
 
     public void setMediaType(String mediaType){
         this.mediaType = mediaType;
+    }
+
+    public Float setVoteAverage(){
+        if (this.getMediaType() == null || !this.getMediaType().equals(PERSON)) {
+            return this.getVoteAverage();
+        }
+        else {
+            return 0.1f;
+        }
     }
 
     public Float getVoteAverage() {
@@ -74,7 +89,15 @@ public class SearchItem implements Serializable {
         return overview;
     }
 
-    public void setOverview(String overview){ this.overview = overview; }
+    public void setPersonOverview(String overview){
+        this.overview = overview;
+    }
+
+    public void setTrailerKey(String trailerKey){
+        this.trailerKey = trailerKey;
+    }
+
+//    public void setOverview(String overview){ this.overview = overview; }
 
     public String getHollywoodTitle() { return hollywoodTitle; }
 
@@ -86,5 +109,20 @@ public class SearchItem implements Serializable {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public Uri createPosterURI(String mediaType){
+        Uri uri;
+        if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
+            String posterURI = this.getPosterPath();
+            String posterURL = Util.getPosterURL(posterURI, POSTER_SIZE_185);
+            uri = Uri.parse(posterURL);
+        } else {
+            String profileURI = this.getProfilePath();
+            String profileURL = Util.getPosterURL(profileURI, POSTER_SIZE_185);
+            uri = Uri.parse(profileURL);
+        }
+
+        return uri;
     }
 }
