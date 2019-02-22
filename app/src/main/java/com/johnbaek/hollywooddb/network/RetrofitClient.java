@@ -15,8 +15,6 @@ public class RetrofitClient {
     private static final String API_KEY = "71ab1b19293efe581c569c1c79d0f004";
     private static String API_KEY_STRING = "api_key";
 
-    private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(chain -> {
                 Request original = chain.request();
@@ -29,7 +27,6 @@ public class RetrofitClient {
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
             })
-//            .addInterceptor(httpLoggingInterceptor)
             .build();
 
     public static retrofit2.Retrofit getRetrofitInstance() {
