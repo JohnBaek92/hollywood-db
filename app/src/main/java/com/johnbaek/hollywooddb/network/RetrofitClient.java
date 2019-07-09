@@ -1,13 +1,9 @@
 package com.johnbaek.hollywooddb.network;
 
-import java.io.IOException;
-
 import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.converter.gson.GsonConverterFactory;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 public class RetrofitClient {
     private static retrofit2.Retrofit retrofit;
@@ -38,7 +34,7 @@ public class RetrofitClient {
                     .build();
         }
         return retrofit;
-        }
+    }
 
     public static com.johnbaek.hollywooddb.network.MovieAPI getRetrofitMovieClient() {
         return getRetrofitInstance().create(com.johnbaek.hollywooddb.network.MovieAPI.class);

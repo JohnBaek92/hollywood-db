@@ -15,6 +15,7 @@ class FavoritesPageContract {
 
     interface Presenter {
         void fetchFavorites();
+
         void displayFavorites(List<Favorites> favorites);
     }
 }

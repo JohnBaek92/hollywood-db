@@ -18,7 +18,7 @@ import com.johnbaek.hollywooddb.model.SearchItem;
 
 import java.util.List;
 
-public class FavoritesActivity extends AppCompatActivity implements FavoritesAdapter.FavoritesClickListener, FavoritesPageContract.View{
+public class FavoritesActivity extends AppCompatActivity implements FavoritesAdapter.FavoritesClickListener, FavoritesPageContract.View {
     private RecyclerView recyclerView;
     private FavoritesAdapter adapter;
     private final static String SEARCH_ITEM = "searchItem";
@@ -55,14 +55,14 @@ public class FavoritesActivity extends AppCompatActivity implements FavoritesAda
         }
     }
 
-    public void showToastMessage(String message){
+    public void showToastMessage(String message) {
         Util.showToastMessage(message, this);
     }
 
 
-    public void displayResults(List<Favorites> favorites){
+    public void displayResults(List<Favorites> favorites) {
         clearData();
-        if(favorites.size() >= 1) {
+        if (favorites.size() >= 1) {
             adapter.setFavorites(favorites);
             adapter.notifyDataSetChanged();
         } else {

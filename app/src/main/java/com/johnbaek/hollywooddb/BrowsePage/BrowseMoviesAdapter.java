@@ -26,7 +26,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
     private static String POSTER_SIZE_92 = "/w92";
     private static String MOVIE = "movie";
 
-    BrowseMoviesAdapter(BrowseListingsClickListener clickListener, ArrayList<SearchItem> movies){
+    BrowseMoviesAdapter(BrowseListingsClickListener clickListener, ArrayList<SearchItem> movies) {
         this.clickListener = clickListener;
         this.setMovies(movies);
     }
@@ -54,7 +54,7 @@ public class BrowseMoviesAdapter extends RecyclerView.Adapter<BrowseMoviesAdapte
         browseMovieViewHolder.browseMovieTitle.setText(movie.getHollywoodTitle());
 
         Float movieVoteAverage = movie.getVoteAverage();
-        browseMovieViewHolder.browseMovieRating.setRating(Math.round(movieVoteAverage/2));
+        browseMovieViewHolder.browseMovieRating.setRating(Math.round(movieVoteAverage / 2));
     }
 
     @Override

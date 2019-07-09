@@ -1,7 +1,6 @@
 package com.johnbaek.hollywooddb.BrowsePage;
 
 import com.johnbaek.hollywooddb.R;
-import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
 import com.johnbaek.hollywooddb.model.SearchListings;
 
@@ -21,15 +20,15 @@ public class BrowsePagePresenter implements BrowsePageContract.Presenter {
         fetchNowPlayingMovies();
     }
 
-    public void fetchTopMovies(){
+    public void fetchTopMovies() {
         model.retrieveTopMovies();
     }
 
-    public void fetchUpcomingMovies(){
+    public void fetchUpcomingMovies() {
         model.retrieveUpcomingMovies();
     }
 
-    public void fetchNowPlayingMovies(){
+    public void fetchNowPlayingMovies() {
         model.retrieveNowPlayingMovies();
     }
 

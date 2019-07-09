@@ -10,32 +10,32 @@ import java.util.List;
 public class DatabaseInitializer {
     private final static FavoritesDatabase db = HollywoodDBApplication.getFavoritesDatabase();
 
-    private static Favorites addFavorite(Favorites favorite){
+    private static Favorites addFavorite(Favorites favorite) {
         db.favoritesDaoAccess().insertFavorite(favorite);
         return favorite;
     }
 
-    private static String deleteFavorite(Favorites favorite){
+    private static String deleteFavorite(Favorites favorite) {
         db.favoritesDaoAccess().deleteFavorite(favorite);
         return favorite.getIdentifier();
     }
 
-    private static List<Favorites> getAllFavorites(){
+    private static List<Favorites> getAllFavorites() {
         return db.favoritesDaoAccess().fetchAllFavorites();
     }
 
-    private static Favorites getFavoriteByIdentifier(String identifier){
+    private static Favorites getFavoriteByIdentifier(String identifier) {
         return db.favoritesDaoAccess().fetchFavoriteByIdentifier(identifier);
     }
 
     public static class AsyncGetFavorites extends AsyncTask<Void, Void, List<Favorites>> {
-        public interface FavoritesList{
+        public interface FavoritesList {
             void processFinishAsync(List<Favorites> favorites);
         }
 
         FavoritesList favoritesList;
 
-        public AsyncGetFavorites(FavoritesList favoritesList){
+        public AsyncGetFavorites(FavoritesList favoritesList) {
             this.favoritesList = favoritesList;
         }
 
@@ -43,7 +43,7 @@ public class DatabaseInitializer {
         @Override
         protected List<Favorites> doInBackground(Void... voids) {
             try {
-             return getAllFavorites();
+                return getAllFavorites();
             } catch (Exception e) {
                 Log.d("error", e.getMessage());
                 return null;
@@ -57,14 +57,14 @@ public class DatabaseInitializer {
         }
     }
 
-    public static class AsyncToggleFavorite extends AsyncTask<Favorites, Void, Favorites>{
+    public static class AsyncToggleFavorite extends AsyncTask<Favorites, Void, Favorites> {
         public interface ToggleFavorite {
             void processFinishAsync(Favorites favorite);
         }
 
         public ToggleFavorite favorite;
 
-        public AsyncToggleFavorite(ToggleFavorite favorite){
+        public AsyncToggleFavorite(ToggleFavorite favorite) {
             this.favorite = favorite;
         }
 
@@ -73,7 +73,7 @@ public class DatabaseInitializer {
             Favorites favorite = params[0];
             Favorites favoriteChecker = DatabaseInitializer.getFavoriteByIdentifier(favorite.getIdentifier());
 
-            if (favoriteChecker == null){
+            if (favoriteChecker == null) {
                 addFavorite(favorite);
             } else {
                 deleteFavorite(favoriteChecker);

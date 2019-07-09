@@ -11,11 +11,14 @@ import java.util.List;
 public interface FavoritesDaoAccess {
 
     @Insert
-    long insertFavorite (Favorites favorite);
+    long insertFavorite(Favorites favorite);
+
     @Query("SELECT * FROM favorites WHERE identifier = :identifier")
-    Favorites fetchFavoriteByIdentifier (String identifier);
+    Favorites fetchFavoriteByIdentifier(String identifier);
+
     @Query("SELECT * FROM favorites")
     List<Favorites> fetchAllFavorites();
+
     @Delete
-    void deleteFavorite (Favorites favorite);
+    void deleteFavorite(Favorites favorite);
 }

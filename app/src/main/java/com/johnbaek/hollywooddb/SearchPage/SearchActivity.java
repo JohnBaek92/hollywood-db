@@ -20,9 +20,14 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
     private SearchListingsAdapter adapter;
     private RecyclerView recyclerView;
     private SearchPageContract.Presenter presenter;
+    private String mediaType;
     private final static String SEARCH = "search";
     private final static String SEARCH_ITEM = "searchItem";
     private final static String MEDIA_TYPE = "mediaType";
+    private final static String PERSON = "person";
+    private final static String MOVIE = "movie";
+    private final static String TV = "tv";
+    private final static String ALL = "all";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +35,7 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
 
 
         String searchSubject = getIntent().getStringExtra(SEARCH);
-        String mediaType = getIntent().getStringExtra(MEDIA_TYPE);
+        mediaType = getIntent().getStringExtra(MEDIA_TYPE);
 
         presenter = new SearchPagePresenter(this, searchSubject);
         presenter.setMediaType(mediaType);
@@ -47,9 +52,30 @@ public class SearchActivity extends AppCompatActivity implements SearchPageContr
     }
 
     public void displaySearchResultText(String searchSubject) {
-        String searchSubjectText = String.format(getString(R.string.search_results_for), searchSubject);
+        String searchSubjectText = String.format(getString(R.string.search_results_for), searchSubject, formatMediaType());
         TextView searchResultText = findViewById(R.id.search_result_text);
         searchResultText.setText(searchSubjectText);
+    }
+
+    private String formatMediaType() {
+        String formattedMedia = "";
+        switch (mediaType) {
+            case ALL:
+                formattedMedia = "All Categories";
+                break;
+            case PERSON:
+                formattedMedia = "People";
+                break;
+            case MOVIE:
+                formattedMedia = "Movies";
+                break;
+            case TV:
+                formattedMedia = "TV";
+                break;
+            default:
+                break;
+        }
+        return formattedMedia;
     }
 
     public void clearData() {

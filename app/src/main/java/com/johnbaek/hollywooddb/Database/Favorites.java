@@ -2,7 +2,6 @@ package com.johnbaek.hollywooddb.Database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 
 @Entity(tableName = "favorites")
@@ -58,21 +57,23 @@ public class Favorites {
         this.overview = overview;
     }
 
-    public Integer getFavoriteId(){
-        return favoriteId ;
+    public Integer getFavoriteId() {
+        return favoriteId;
     }
 
-    public void setFavoriteId(Integer favoriteId){
+    public void setFavoriteId(Integer favoriteId) {
         this.favoriteId = favoriteId;
     }
 
-    public void setIdentifier(String identifier){
+    public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
 
-    public String getIdentifier(){
+    public String getIdentifier() {
         return identifier;
     }
 
-    public int getDatabaseId() { return databaseId; }
+    public int getDatabaseId() {
+        return databaseId;
+    }
 }

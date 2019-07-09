@@ -12,7 +12,7 @@ public class SearchListings {
         this.searchItemListings = searchItemListings;
     }
 
-    public ArrayList<SearchItem> getSearchItemListings(){
+    public ArrayList<SearchItem> getSearchItemListings() {
         return searchItemListings;
     }
 }

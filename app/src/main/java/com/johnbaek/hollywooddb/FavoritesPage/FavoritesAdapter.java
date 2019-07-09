@@ -1,7 +1,6 @@
 package com.johnbaek.hollywooddb.FavoritesPage;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -28,13 +27,13 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
 
     private static String W185 = "/w185";
     private static String MOVIE = "movie";
-    private static String TV ="tv";
+    private static String TV = "tv";
     private static Context context;
 
     private FavoritesAdapter.FavoritesClickListener clickListener;
     private List<Favorites> favorites = new ArrayList<>();
 
-    FavoritesAdapter(FavoritesClickListener clickListener){
+    FavoritesAdapter(FavoritesClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
@@ -73,10 +72,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         final Favorites favoriteDBCheck = new Favorites(identifier, mediaType, imageURI, favorite.getVoteAverage(), overview, favorite.getDatabaseId());
 
 
-        if(mediaType.equals(MOVIE) || mediaType.equals(TV)) {
-            favoritesViewHolder.favoriteRating.setRating(Math.round(favorite.getVoteAverage()/2));
-            favoriteItem = new SearchItem(mediaType, favorite.getVoteAverage()+0.1f, favorite.getImageURI(), overview, identifier, null, null, favorite.getDatabaseId());
-            if(mediaType.equals(MOVIE)){
+        if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
+            favoritesViewHolder.favoriteRating.setRating(Math.round(favorite.getVoteAverage() / 2));
+            favoriteItem = new SearchItem(mediaType, favorite.getVoteAverage() + 0.1f, favorite.getImageURI(), overview, identifier, null, null, favorite.getDatabaseId());
+            if (mediaType.equals(MOVIE)) {
                 favoritesViewHolder.favoriteName.setBackgroundColor(context.getColor(R.color.red));
             } else {
                 favoritesViewHolder.favoriteName.setBackgroundColor(context.getColor(R.color.green));
@@ -92,7 +91,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         favoritesViewHolder.favoriteToggle.setOnClickListener(view -> toggleFavoriteAndRemove(favoriteToggle, favoriteDBCheck, i));
     }
 
-    private void toggleFavoriteAndRemove(ToggleButton favoriteToggle, Favorites favorite, int i){
+    private void toggleFavoriteAndRemove(ToggleButton favoriteToggle, Favorites favorite, int i) {
         Util.onFavoriteClick(favoriteToggle, favorite);
         favorites.remove(i);
         notifyDataSetChanged();
@@ -103,14 +102,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         return favorites != null ? favorites.size() : 0;
     }
 
-    public void setFavorites(List<Favorites> favorites){
+    public void setFavorites(List<Favorites> favorites) {
         this.favorites = favorites;
         notifyDataSetChanged();
     }
 
     public void clear() {
         final int size = favorites.size();
-        if (size > 0){
+        if (size > 0) {
             favorites.clear();
             notifyItemRangeRemoved(0, size);
         }

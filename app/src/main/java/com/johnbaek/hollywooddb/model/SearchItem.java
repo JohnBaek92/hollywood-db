@@ -50,27 +50,26 @@ public class SearchItem implements Serializable {
         return trailerKey;
     }
 
-//    public void setTrailerKey(String trailerKey) {
-//        this.trailerKey = trailerKey;
-//    }
+    public String getBiography() {
+        return this.biography;
+    }
 
-    public String getBiography(){ return this.biography; }
-
-    public int getDatabaseId(){ return databaseId; }
+    public int getDatabaseId() {
+        return databaseId;
+    }
 
     public String getMediaType() {
         return mediaType;
     }
 
-    public void setMediaType(String mediaType){
+    public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
     }
 
-    public Float setVoteAverage(){
+    public Float setVoteAverage() {
         if (this.getMediaType() == null || !this.getMediaType().equals(PERSON)) {
             return this.getVoteAverage();
-        }
-        else {
+        } else {
             return 0.1f;
         }
     }
@@ -83,25 +82,29 @@ public class SearchItem implements Serializable {
         return posterPath;
     }
 
-    public String getProfilePath() { return profilePath; }
+    public String getProfilePath() {
+        return profilePath;
+    }
 
     public String getOverview() {
         return overview;
     }
 
-    public void setPersonOverview(String overview){
+    public void setPersonOverview(String overview) {
         this.overview = overview;
     }
 
-    public void setTrailerKey(String trailerKey){
+    public void setTrailerKey(String trailerKey) {
         this.trailerKey = trailerKey;
     }
 
-//    public void setOverview(String overview){ this.overview = overview; }
+    public String getHollywoodTitle() {
+        return hollywoodTitle;
+    }
 
-    public String getHollywoodTitle() { return hollywoodTitle; }
-
-    public String getHollywoodName() { return hollywoodName; }
+    public String getHollywoodName() {
+        return hollywoodName;
+    }
 
     public boolean isFavorite() {
         return isFavorite;
@@ -111,7 +114,7 @@ public class SearchItem implements Serializable {
         isFavorite = favorite;
     }
 
-    public Uri createPosterURI(String mediaType){
+    public Uri createPosterURI(String mediaType) {
         Uri uri;
         if (mediaType.equals(MOVIE) || mediaType.equals(TV)) {
             String posterURI = this.getPosterPath();

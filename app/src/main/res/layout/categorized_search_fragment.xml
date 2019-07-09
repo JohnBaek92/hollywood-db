@@ -68,6 +68,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <View
+            app:layout_constraintTop_toBottomOf="@id/category_search_fragment_search_tv"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+
+        <TextView
+            android:id="@+id/category_search_fragment_search_all"
+            android:padding="15dp"
+            app:layout_constraintTop_toBottomOf="@id/category_search_fragment_search_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </android.support.constraint.ConstraintLayout>
 
 

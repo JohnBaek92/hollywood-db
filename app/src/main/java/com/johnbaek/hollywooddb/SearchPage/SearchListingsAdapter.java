@@ -26,15 +26,15 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
 
     private SearchListingsAdapter.SearchListingClickListener clickListener;
     private ArrayList<SearchItem> searchItemListings = new ArrayList<>();
-    private static String MOVIE ="movie";
-    private static String TV ="tv";
+    private static String MOVIE = "movie";
+    private static String TV = "tv";
     private static String PERSON = "person";
     private static String POSTER_SIZE_185 = "/w185";
     private static String RED = "#cc1108";
     private static String GREEN = "#0a912b";
     private static String BLUE = "#0832af";
 
-    SearchListingsAdapter(SearchListingClickListener clickListener){
+    SearchListingsAdapter(SearchListingClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
@@ -82,7 +82,7 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
             searchListingViewHolder.searchBackground.setImageURI(uri);
 
             voteAverage = Math.round(searchItem.getVoteAverage());
-            searchListingViewHolder.searchRating.setRating(Math.round(voteAverage/2));
+            searchListingViewHolder.searchRating.setRating(Math.round(voteAverage / 2));
 
             favorite = new Favorites(identifier, mediaType, posterURI, searchItem.getVoteAverage(), overview, searchItem.getDatabaseId());
         } else {
@@ -112,13 +112,13 @@ public class SearchListingsAdapter extends RecyclerView.Adapter<SearchListingsAd
 
     public void clear() {
         final int size = searchItemListings.size();
-        if (size > 0){
+        if (size > 0) {
             searchItemListings.clear();
             notifyItemRangeRemoved(0, size);
         }
     }
 
-    void setSearchItemListings(ArrayList<SearchItem> searchItemListings){
+    void setSearchItemListings(ArrayList<SearchItem> searchItemListings) {
         this.searchItemListings = searchItemListings;
     }
 

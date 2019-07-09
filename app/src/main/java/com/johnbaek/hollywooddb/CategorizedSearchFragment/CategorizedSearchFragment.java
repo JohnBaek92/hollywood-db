@@ -22,8 +22,8 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
     TextView searchPeopleView;
     TextView searchMoviesView;
     TextView searchTvView;
+    TextView searchAllView;
     SearchView searchView;
-//    private OnFragmentInteractionListener fragmentInteractionListener;
     private static String MEDIATYPE = "mediaType";
     private static String PERSON = "person";
     private static String MOVIE = "movie";
@@ -31,7 +31,7 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
     private static String SEARCH = "search";
     private static String ALL = "all";
 
-    public static CategorizedSearchFragment newInstance(){
+    public static CategorizedSearchFragment newInstance() {
         return new CategorizedSearchFragment();
     }
 
@@ -44,12 +44,14 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
         searchPeopleView = view.findViewById(R.id.category_search_fragment_search_people);
         searchMoviesView = view.findViewById(R.id.category_search_fragment_search_movies);
         searchTvView = view.findViewById(R.id.category_search_fragment_search_tv);
+        searchAllView = view.findViewById(R.id.category_search_fragment_search_all);
 
         searchView.setOnQueryTextListener(this);
         searchView.setOnClickListener(this);
         searchPeopleView.setOnClickListener(this);
         searchMoviesView.setOnClickListener(this);
         searchTvView.setOnClickListener(this);
+        searchAllView.setOnClickListener(this);
         searchSuggestions.setVisibility(View.GONE);
         return view;
     }
@@ -57,48 +59,36 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            fragmentInteractionListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        fragmentInteractionListener = null;
     }
 
 
     @Override
     public void onClick(View view) {
-
+        searchView.setIconified(false);
         switch (view.getId()) {
-            case R.id.category_search_fragment_search_view:
-                searchView.setIconified(false);
-                break;
-
             case R.id.category_search_fragment_search_people:
                 createSearchIntent(PERSON);
                 break;
-
             case R.id.category_search_fragment_search_movies:
                 createSearchIntent(MOVIE);
                 break;
-
             case R.id.category_search_fragment_search_tv:
                 createSearchIntent(TV);
                 break;
-
+            case R.id.category_search_fragment_search_all:
+                createSearchIntent(ALL);
+                break;
             default:
                 break;
         }
-
     }
 
-    public void createSearchIntent(String mediaType){
+    public void createSearchIntent(String mediaType) {
         Intent intent = new Intent(getContext(), SearchActivity.class);
         intent.putExtra(SEARCH, searchView.getQuery().toString());
         intent.putExtra(MEDIATYPE, mediaType);
@@ -107,7 +97,7 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
 
     @Override
     public boolean onQueryTextSubmit(String search) {
-        Intent intent = new Intent(getContext() , SearchActivity.class);
+        Intent intent = new Intent(getContext(), SearchActivity.class);
         intent.putExtra(SEARCH, search);
         intent.putExtra(MEDIATYPE, ALL);
         getContext().startActivity(intent);
@@ -121,14 +111,11 @@ public class CategorizedSearchFragment extends Fragment implements View.OnClickL
             searchPeopleView.setText(getString(R.string.two_strings_with_space, search, getString(R.string.search_people)));
             searchMoviesView.setText(getString(R.string.two_strings_with_space, search, getString(R.string.search_movies)));
             searchTvView.setText(getString(R.string.two_strings_with_space, search, getString(R.string.search_tv)));
+            searchAllView.setText(getString(R.string.two_strings_with_space, search, getString(R.string.search_all)));
         } else {
             searchSuggestions.setVisibility(View.GONE);
         }
 
         return false;
     }
-
-//    public interface OnFragmentInteractionListener {
-//
-//    }
 }

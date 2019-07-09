@@ -32,11 +32,11 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
         presenter = new DetailPagePresenter(this, searchItem);
     }
 
-    public void showToastMessage(String message){
+    public void showToastMessage(String message) {
         Util.showToastMessage(message, this);
     }
 
-    public void displayDetailView(SearchItem detailSubject){
+    public void displayDetailView(SearchItem detailSubject) {
         TextView detailMediaTypeView = findViewById(R.id.detail_media_type);
         TextView detailIDView = findViewById(R.id.detail_id);
         SimpleDraweeView detailImageView = findViewById(R.id.detail_image);
@@ -58,7 +58,7 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
             }
         };
 
-        if (detailSubject.getTrailerKey() != null){
+        if (detailSubject.getTrailerKey() != null) {
             youTubePlayerView.initialize(YouTubeClient.getApiKey(), onInitializedListener);
         } else {
             youTubePlayerView.setVisibility(View.GONE);
@@ -80,7 +80,7 @@ public class DetailActivity extends YouTubeBaseActivity implements DetailPageCon
 
         if (!mediaType.equals(PERSON)) {
             voteAverage = presenter.getVoteAverage();
-            detailRatingView.setRating(Math.round(voteAverage/2));
+            detailRatingView.setRating(Math.round(voteAverage / 2));
         } else {
             detailRatingView.setVisibility(View.GONE);
         }

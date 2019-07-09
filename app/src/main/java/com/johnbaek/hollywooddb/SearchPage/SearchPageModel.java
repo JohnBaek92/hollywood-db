@@ -36,23 +36,23 @@ public class SearchPageModel implements SearchPageContract.Model {
         enqueueListings(searchListings, PERSON);
     }
 
-    public void retrieveMovieResults(String searchSubject){
+    public void retrieveMovieResults(String searchSubject) {
         Call<SearchListings> searchListings = movieAPI.getMovieQueries(searchSubject);
         enqueueListings(searchListings, MOVIE);
     }
 
-    public void retrieveTvResults(String searchSubject){
+    public void retrieveTvResults(String searchSubject) {
         Call<SearchListings> searchListings = movieAPI.getTvQueries(searchSubject);
         enqueueListings(searchListings, TV);
     }
 
-    private void enqueueListings(Call<SearchListings> searchListings, String mediaType){
+    private void enqueueListings(Call<SearchListings> searchListings, String mediaType) {
         searchListings.enqueue(new Callback<SearchListings>() {
             @Override
             public void onResponse(@NonNull Call<SearchListings> call, @NonNull Response<SearchListings> response) {
                 if (response.isSuccessful()) {
                     ArrayList<SearchItem> searchItems = response.body().getSearchItemListings();
-                    for(SearchItem searchItem : searchItems) {
+                    for (SearchItem searchItem : searchItems) {
                         if (searchItem.getMediaType() == null) {
                             searchItem.setMediaType(mediaType);
                         }

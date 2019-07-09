@@ -5,11 +5,11 @@ import com.johnbaek.hollywooddb.Database.DatabaseInitializer;
 public class FavoritesPageModel implements FavoritesPageContract.Model {
     private FavoritesPageContract.Presenter presenter;
 
-    FavoritesPageModel(FavoritesPagePresenter presenter){
+    FavoritesPageModel(FavoritesPagePresenter presenter) {
         this.presenter = presenter;
     }
 
-    public void retrieveFavorites(){
+    public void retrieveFavorites() {
         new DatabaseInitializer.AsyncGetFavorites(favorites -> {
             presenter.displayFavorites(favorites);
         }).execute();

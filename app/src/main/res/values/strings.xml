@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">HollywoodDB</string>
     <string name="browse_hollywoodDB"><u>Browse HollywoodDB</u></string>
-    <string name="landing_page_search_text">Search for People, Movies and TV Shows</string>
+    <string name="landing_page_search_text">Search The HollywoodDB</string>
     <string name="browse_favorites"><u>View Favorites</u></string>
     <string name="search_people">in People</string>
     <string name="search_movies">in Movies</string>
     <string name="search_tv">in TV</string>
+    <string name="search_all">in All Categories</string>
     <string name="my_favorites"><b>My Favorites</b></string>
     <string name="upcoming_movies">Upcoming Movies</string>
     <string name="now_playing_movies">Now Playing Movies</string>
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="two_strings_with_space">%1$s %2$s</string>
-    <string name="search_results_for">Search Results For \"%1$s\"</string>
+    <string name="search_results_for">Search Results For \"%1$s\" In %2$s</string>
 </resources>

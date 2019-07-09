@@ -31,7 +31,7 @@
             android:background="@color/white"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/landing_page_search_text"
+            app:layout_constraintTop_toTopOf="parent"
         />
 
     </android.support.constraint.ConstraintLayout>

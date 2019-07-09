@@ -1,7 +1,5 @@
 package com.johnbaek.hollywooddb.BrowsePage;
 
-import android.support.annotation.NonNull;
-
 import com.johnbaek.hollywooddb.model.SearchListings;
 import com.johnbaek.hollywooddb.network.MovieAPI;
 import com.johnbaek.hollywooddb.network.RetrofitClient;
@@ -20,7 +18,7 @@ public class BrowsePageModel implements BrowsePageContract.Model {
     }
 
     @Override
-    public void retrieveTopMovies(){
+    public void retrieveTopMovies() {
         Call<SearchListings> topMovies = movieAPI.getTopMovies();
         topMovies.enqueue(new Callback<SearchListings>() {
             @Override
@@ -36,7 +34,7 @@ public class BrowsePageModel implements BrowsePageContract.Model {
     }
 
     @Override
-    public void retrieveUpcomingMovies(){
+    public void retrieveUpcomingMovies() {
         Call<SearchListings> upcomingMovies = movieAPI.getUpcomingMovies();
         upcomingMovies.enqueue(new Callback<SearchListings>() {
             @Override
@@ -52,7 +50,7 @@ public class BrowsePageModel implements BrowsePageContract.Model {
     }
 
     @Override
-    public void retrieveNowPlayingMovies(){
+    public void retrieveNowPlayingMovies() {
         Call<SearchListings> nowPlayingMovies = movieAPI.getNowPlayingMovies();
         nowPlayingMovies.enqueue(new Callback<SearchListings>() {
             @Override

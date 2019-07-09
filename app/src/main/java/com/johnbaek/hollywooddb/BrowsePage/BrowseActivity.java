@@ -1,23 +1,18 @@
 package com.johnbaek.hollywooddb.BrowsePage;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.johnbaek.hollywooddb.CategorizedSearchFragment.CategorizedSearchFragment;
 import com.johnbaek.hollywooddb.DetailPage.DetailActivity;
+import com.johnbaek.hollywooddb.R;
 import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
-import com.johnbaek.hollywooddb.R;
 
 import java.util.ArrayList;
 
@@ -49,7 +44,7 @@ public class BrowseActivity extends AppCompatActivity implements BrowsePageContr
         recyclerView.setLayoutManager(new LinearLayoutManager(BrowseActivity.this, LinearLayoutManager.HORIZONTAL, false));
     }
 
-    public void showToastMessage(String message){
+    public void showToastMessage(String message) {
         Util.showToastMessage(message, this);
     }
 

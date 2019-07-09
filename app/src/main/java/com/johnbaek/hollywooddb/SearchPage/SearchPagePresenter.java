@@ -2,15 +2,10 @@ package com.johnbaek.hollywooddb.SearchPage;
 
 import com.johnbaek.hollywooddb.Database.DatabaseInitializer;
 import com.johnbaek.hollywooddb.Database.Favorites;
-import com.johnbaek.hollywooddb.Util;
 import com.johnbaek.hollywooddb.model.SearchItem;
-import com.johnbaek.hollywooddb.model.SearchListings;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-
-import retrofit2.Response;
 
 public class SearchPagePresenter implements SearchPageContract.Presenter {
 
@@ -19,7 +14,6 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
     private String mediaType;
     private SearchPageContract.Model model;
     private static String NO_RESULTS = "No Results";
-    private List<Favorites> favorites;
     private final static String PERSON = "person";
     private final static String MOVIE = "movie";
     private final static String TV = "tv";
@@ -33,7 +27,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
         setSearchSubjectText();
     }
 
-    public void fetchResults(){
+    public void fetchResults() {
         view.clearData();
         switch (mediaType) {
             case ALL:
@@ -57,7 +51,7 @@ public class SearchPagePresenter implements SearchPageContract.Presenter {
         view.displaySearchResultText(searchSubject);
     }
 
-    public void setMediaType(String mediaType){
+    public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
     }
 
